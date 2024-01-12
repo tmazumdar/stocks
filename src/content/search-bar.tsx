@@ -1,12 +1,12 @@
 import { ChangeEvent } from "react"
 
-type navBarProps = {
+type searchBarProps = {
     searchText: string,
     setSearchText: React.Dispatch<React.SetStateAction<any>>,
     onSearchClick: () => void
 }
 
-export function NavBar({searchText, setSearchText, onSearchClick }: navBarProps) {
+export function SearchBar({searchText, setSearchText, onSearchClick }: searchBarProps) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
     };

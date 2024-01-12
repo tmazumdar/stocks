@@ -9,6 +9,6 @@ export default {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ["fantasy","dim"]
+    themes: ["nord","dim"]
   }
 }
