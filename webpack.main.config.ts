@@ -10,7 +10,7 @@ export const mainConfig: Configuration = {
    */
   mode: 'development',
   watch: true,
-  entry: './src/index.ts',
+  entry: './src/main.ts',
   // Put your normal webpack config below here
   module: {
     rules,
