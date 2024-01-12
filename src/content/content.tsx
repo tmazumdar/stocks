@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { NavBar } from './navbar';
-import { ResultsTable } from './results-table';
+import { TickerTable } from './ticker-table';
+import { TickerRow } from '../types';
 
 export function Content() {
     const [searchText, setSearchText] = useState("");
+    const [tickerRows, setTickerRows] = useState<Array<TickerRow>>([]);
+    
     const searchClickHandler = () => {
-        console.log(`search clicked: ${searchText}`);
         window.api.getTickers(searchText).then((res: any) => {
-            console.log(JSON.parse(res).results);
+            let results: Array<TickerRow> = JSON.parse(res).results;
+            setTickerRows(results);
         });
     };
 
@@ -15,7 +18,7 @@ export function Content() {
         <>
             <NavBar searchText={searchText} setSearchText={setSearchText} onSearchClick={searchClickHandler}></NavBar>
             <div className="divider divider-primary"></div>
-            <ResultsTable></ResultsTable>
+            <TickerTable rows={tickerRows}></TickerTable>
         </>
     )
 };

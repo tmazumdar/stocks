@@ -47,9 +47,7 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.handle("fetchTickers", async (event, ...args) => {
-  console.log(event);
-  console.log(args);
-  const response = await fetch(`https://api.polygon.io/v3/reference/tickers?ticker=${args}&active=true&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
+  const response = await fetch(`https://api.polygon.io/v3/reference/tickers?search=${args}&active=true&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
   const body = await response.text();
   return body;
 })
