@@ -9,7 +9,12 @@ type navBarProps = {
 export function NavBar({searchText, setSearchText, onSearchClick }: navBarProps) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
-    }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key == "Enter" && searchText.length > 0)
+            onSearchClick();
+    };
 
     return (
         <div className="navbar bg-base-200 rounded-sm">
@@ -28,12 +33,12 @@ export function NavBar({searchText, setSearchText, onSearchClick }: navBarProps)
             </div>
             <div className="px-1">
                 <div className="form-control">
-                    <input type="text" placeholder="Ticker" onChange={handleChange} value={searchText} className="input input-primary input-bordered w-24 md:w-auto" />
+                    <input type="text" placeholder="Ticker" onKeyDown={handleKeyDown} onChange={handleChange} value={searchText} className="input input-ghost input-bordered w-24 md:w-auto" />
                 </div>
             </div>
             <div className="px-1">
                 <div className="form-control">
-                    <button className="btn " onClick={onSearchClick}>
+                    <button className="btn btn-ghost" onClick={onSearchClick}>
                         <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" className="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         Search
                     </button>

@@ -15,14 +15,17 @@ var mainWindow : BrowserWindow
 const createWindow = (): void => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 600,
+    height: 530,
     width: 800,
     webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      nodeIntegration: true
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
     titleBarStyle: 'hidden',
-    titleBarOverlay: true
+    titleBarOverlay: {
+      symbolColor: "black",
+      color: "rgba(0,0,0,0)",
+      height: 10
+    }
   });
 
   // and load the index.html of the app.

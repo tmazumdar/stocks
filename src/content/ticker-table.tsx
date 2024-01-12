@@ -6,8 +6,8 @@ type TickerTableProps = {
 
 export function TickerTable({rows}:TickerTableProps) {
     return (
-        <div className="overflow-x-auto h-fit">
-            <table className="table table-fixed table-xs table-pin-rows  table-pin-cols">
+        <div className="overflow-y-auto h-96">  
+            <table className="table table-fixed table-xs table-pin-rows">
                 <thead>
                     <tr>
                         <th>Ticker</th>
@@ -19,7 +19,7 @@ export function TickerTable({rows}:TickerTableProps) {
                 <tbody>
                     {rows.map(r => {
                         return (
-                            <tr>
+                            <tr className="hover">
                                 <th>{r.ticker}</th>
                                 <td>{r.name}</td>
                                 <td>{r.currency_name?.toUpperCase()}</td>
