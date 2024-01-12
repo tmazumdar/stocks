@@ -2,7 +2,7 @@ import { ChangeEvent } from "react"
 
 type searchBarProps = {
     searchText: string,
-    setSearchText: React.Dispatch<React.SetStateAction<any>>,
+    setSearchText: React.Dispatch<React.SetStateAction<string>>,
     onSearchClick: () => void
 }
 

@@ -6,7 +6,7 @@ import { TickerRow } from '../types';
 
 export function Content() {
     const [searchText, setSearchText] = useState("");
-    const [activePanel, setActivePanel] = useState(true);
+    const [activePanelIndex, setActivePanelIndex] = useState(0);
     const [tickerRows, setTickerRows] = useState<Array<TickerRow>>([]);
 
     const searchClickHandler = () => {
@@ -24,7 +24,7 @@ export function Content() {
         
             <TickerTable rows={tickerRows}></TickerTable>
             
-            <BottomNav></BottomNav>
+            <BottomNav activePanelIndex={activePanelIndex} setActivePanelIndex={setActivePanelIndex}></BottomNav>
         </>
     )
 };
