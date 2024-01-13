@@ -15,6 +15,7 @@ var mainWindow : BrowserWindow
 const createWindow = (): void => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    icon: './src/assets/flying-money.png',
     height: 600,
     width: 800,
     webPreferences: {
