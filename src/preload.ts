@@ -5,8 +5,10 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 let WINDOW_API = {
     getTickers: async(searchText: string) => {
-        var result = await ipcRenderer.invoke("fetchTickers", searchText);
-        return result;
+        return await ipcRenderer.invoke("fetchTickers", searchText);
+    },
+    saveTickers: async (tickers: Array<string>) => {
+        return await ipcRenderer.invoke("saveTickers", tickers);
     }
 }
 

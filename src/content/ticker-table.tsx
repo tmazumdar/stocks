@@ -1,10 +1,16 @@
+import { MouseEventHandler } from "react";
 import { TickerRow } from "../types";
 
 type TickerTableProps = {
-    rows: Array<TickerRow>
+    rows: Array<TickerRow>,
+    saveTicker: (ticker: string) => void
 }
 
-export function TickerTable({rows}:TickerTableProps) {
+export function TickerTable({rows, saveTicker}:TickerTableProps) {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>, ticker: string) => {
+        saveTicker(ticker);
+    };
+
     return (
         <div className="overflow-y-auto h-96">  
             <table className="table table-fixed table-xs table-pin-rows">
@@ -22,7 +28,7 @@ export function TickerTable({rows}:TickerTableProps) {
                         return (
                             <tr className="hover">
                                 <td>
-                                    <button className="text-primary">
+                                    <button className="text-primary" onClick={(e) => handleClick(e, r.ticker)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3H8a2 2 0 0 0-2 2v16l6-3l6 3V5a2 2 0 0 0-2-2"/></svg>
                                     </button>
                                     {/* selected icon */}
