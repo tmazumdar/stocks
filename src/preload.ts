@@ -4,11 +4,14 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 let WINDOW_API = {
-    getTickers: async(searchText: string) => {
+    fetchTickers: async(searchText: string) => {
         return await ipcRenderer.invoke("fetchTickers", searchText);
     },
-    saveTickers: async (tickers: Array<string>) => {
-        return await ipcRenderer.invoke("saveTickers", tickers);
+    saveTickers: (tickers: Array<string>) => {
+        return ipcRenderer.invoke("saveTickers", tickers);
+    },
+    loadTickers: () => {
+        return ipcRenderer.invoke("loadTickers");
     }
 }
 

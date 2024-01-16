@@ -61,18 +61,22 @@ ipcMain.handle("fetchTickers", async (event, ...args) => {
 });
 
 ipcMain.handle("saveTickers", async(event, data) => {
-  console.log(data);
   let jsonData = JSON.stringify(data);
   // write to AppData folder
-  
   fs.writeFileSync(preferencesfilePath, jsonData);
-  console.log("Saved data to.. ", preferencesfilePath);
-  let savedData = fs.readFileSync(preferencesfilePath, "utf8");
-  return savedData;
+});
+
+ipcMain.handle("loadTickers", (event, ...args) => {
+ // read data from saved config if any
+  let preferencesFileExists = fs.existsSync(preferencesfilePath);
+  
+  if (preferencesFileExists) {
+    let jsonData = fs.readFileSync(preferencesfilePath, "utf8");
+    return JSON.parse(jsonData);
+  }
 });
 
 app.whenReady().then(() => {
-
   app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -80,15 +84,6 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-
-  // read data from saved config if any
-  let preferencesFileExists = fs.existsSync(preferencesfilePath);
-  console.log("preferencesFileExists: ", preferencesFileExists);
-  if (preferencesFileExists) {
-    let jsonData = fs.readFileSync(preferencesfilePath, "utf8");
-    let data = JSON.parse(jsonData);
-    console.log(data);
-  }
 });
 
 // In this file you can include the rest of your app's specific main process

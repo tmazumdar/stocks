@@ -1,14 +1,14 @@
-import { MouseEventHandler } from "react";
 import { TickerRow } from "../types";
 
 type TickerTableProps = {
     rows: Array<TickerRow>,
-    saveTicker: (ticker: string) => void
+    savedTickers: Array<string>,
+    toggleTicker: (ticker: string) => void
 }
 
-export function TickerTable({rows, saveTicker}:TickerTableProps) {
+export function TickerTable({rows, savedTickers, toggleTicker}:TickerTableProps) {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>, ticker: string) => {
-        saveTicker(ticker);
+        toggleTicker(ticker);
     };
 
     return (
@@ -28,9 +28,14 @@ export function TickerTable({rows, saveTicker}:TickerTableProps) {
                         return (
                             <tr className="hover">
                                 <td>
-                                    <button className="text-primary" onClick={(e) => handleClick(e, r.ticker)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3H8a2 2 0 0 0-2 2v16l6-3l6 3V5a2 2 0 0 0-2-2"/></svg>
-                                    </button>
+                                    <div className="tooltip tooltip-right" data-tip={savedTickers.indexOf(r.ticker) >= 0 ? 'Unsave' : 'Save'}>
+                                        <button className="text-primary" onClick={(e) => handleClick(e, r.ticker)}>
+                                            {savedTickers.indexOf(r.ticker) >= 0 ? 
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 2a3 3 0 0 0-3 3v16a1 1 0 0 0 1.447.894L12 19.118l5.553 2.776A1 1 0 0 0 19 21V5a3 3 0 0 0-3-3z" clip-rule="evenodd"/></svg>
+                                                : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3H8a2 2 0 0 0-2 2v16l6-3l6 3V5a2 2 0 0 0-2-2"/></svg>
+                                            }                                        
+                                        </button>
+                                    </div>
                                     {/* selected icon */}
                                     {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 2a3 3 0 0 0-3 3v16a1 1 0 0 0 1.447.894L12 19.118l5.553 2.776A1 1 0 0 0 19 21V5a3 3 0 0 0-3-3z" clip-rule="evenodd"/></svg> */}
                                 </td>
@@ -43,6 +48,7 @@ export function TickerTable({rows, saveTicker}:TickerTableProps) {
                     })}
                 </tbody>
             </table>
+            
         </div>
     )
 };
