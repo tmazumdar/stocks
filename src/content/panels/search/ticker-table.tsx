@@ -1,4 +1,4 @@
-import { TickerRow } from "../types";
+import { TickerRow } from "../../../types";
 
 type TickerTableProps = {
     rows: Array<TickerRow>,
