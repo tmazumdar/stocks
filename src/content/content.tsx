@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BottomNav } from './bottom-nav';
+import { InfoPanel } from './panels/info/info-panel';
 import { SearchPanel } from './panels/search/search-panel';
 import { TickerRow } from '../types';
 
@@ -18,6 +19,10 @@ export function Content() {
                     setSavedTickers={setSavedTickers} 
                     setTickerRows={setTickerRows}
                 ></SearchPanel>
+            )
+        } else if (panelIndex == 1) {
+            return (
+                <InfoPanel savedTickers={savedTickers}></InfoPanel>
             )
         }
     };
