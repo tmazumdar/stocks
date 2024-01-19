@@ -3,16 +3,14 @@ import { TickerStats } from './ticker-stats';
 import { TickerStat } from '../../../types'
 
 type InfoPanelProps = {
-    savedTickers: Array<string>,
-    tickerStats: Array<TickerStat>,
-    setTickerStats: React.Dispatch<React.SetStateAction<TickerStat[]>>
+    tickerStats: Array<TickerStat>
 }
 
-export function InfoPanel({savedTickers, tickerStats, setTickerStats}:InfoPanelProps) {
+export function InfoPanel({ tickerStats }:InfoPanelProps) {
     return (
         <>
             <InfoBar></InfoBar>
-            <TickerStats savedTickers={savedTickers} tickerStats={tickerStats} setTickerStats={setTickerStats}></TickerStats>
+            <TickerStats tickerStats={tickerStats}></TickerStats>
         </>
     )
 };

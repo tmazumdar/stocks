@@ -1,39 +1,10 @@
-import { useEffect, useState } from 'react';
 import { TickerStat } from '../../../types';
 
 type TickerStatsProps = {
-    savedTickers: Array<string>,
-    tickerStats: Array<TickerStat>,
-    setTickerStats: React.Dispatch<React.SetStateAction<TickerStat[]>>
+    tickerStats: Array<TickerStat>
 }
 
-interface PromiseResponse {
-    status: string;
-    value: string;
-}
-
-export function TickerStats({ savedTickers, tickerStats, setTickerStats }: TickerStatsProps) {
-    let statsArray = new Array<TickerStat>();
-    useEffect(() => {
-        // fetch previous closing prices for all saved tickers from api
-        const promises: Promise<number>[] = savedTickers.map(t => {
-            return window.api.fetchPrevClose(t)
-        });
-
-        Promise.allSettled(promises)
-            .then((res: any) => {
-                statsArray = res.map((r: PromiseResponse) => {
-                    if (r.status === "fulfilled" && !!r.value) {
-                        return JSON.parse(r.value).results?.[0];
-                    }
-                });
-                setTickerStats(statsArray);
-            });
-    }, []);
-
-    useEffect(() => {
-       // console.log(tickerStats);
-    }, [tickerStats]);
+export function TickerStats({ tickerStats }: TickerStatsProps) {
 
     return (
         <div className="h-96 overflow-y-scroll">

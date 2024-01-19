@@ -16,9 +16,9 @@ export function SearchPanel({ savedTickers, setSavedTickers, tickerRows, setTick
 
     useEffect(() => {
         // load tickers from appData file
-        window.api.loadTickers().then((res: Array<string>) => {
-            setSavedTickers(res);
-        });
+        // window.api.loadTickers().then((res: Array<string>) => {
+        //     setSavedTickers(res);
+        // });
     }, []);
 
     useEffect(() => {
