@@ -22,7 +22,7 @@ export function SearchPanel({ savedTickers, setSavedTickers, tickerRows, setTick
     }, []);
 
     useEffect(() => {
-        console.log(savedTickers);
+        // console.log(savedTickers);
     }, [savedTickers]);
 
     const searchClickHandler = () => {
