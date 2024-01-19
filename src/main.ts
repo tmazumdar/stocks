@@ -60,6 +60,11 @@ ipcMain.handle("fetchTickers", async (event, ...args) => {
   return body;
 });
 
+ipcMain.handle("fetchPrevClose", async (event, ...args) => {
+  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${args}/prev?adjusted=true&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
+  return await response.text(); 
+});
+
 ipcMain.handle("saveTickers", async(event, data) => {
   let jsonData = JSON.stringify(data);
   // write to AppData folder

@@ -7,6 +7,9 @@ let WINDOW_API = {
     fetchTickers: async(searchText: string) => {
         return await ipcRenderer.invoke("fetchTickers", searchText);
     },
+    fetchPrevClose: async(searchText: string) => {
+        return await ipcRenderer.invoke("fetchPrevClose", searchText);
+    },
     saveTickers: (tickers: Array<string>) => {
         return ipcRenderer.invoke("saveTickers", tickers);
     },

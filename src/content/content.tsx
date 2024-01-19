@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { BottomNav } from './bottom-nav';
 import { InfoPanel } from './panels/info/info-panel';
 import { SearchPanel } from './panels/search/search-panel';
-import { TickerRow } from '../types';
+import { TickerRow, TickerStat } from '../types';
 
 export function Content() {
     
     const [activePanelIndex, setActivePanelIndex] = useState(0);
     const [savedTickers, setSavedTickers] = useState<Array<string>>([]);
     const [tickerRows, setTickerRows] = useState<Array<TickerRow>>([]);
+    const [tickerStats, setTickerStats] = useState<TickerStat[]>([]);
 
     const panelMap = (panelIndex: number) => {
         if (panelIndex == 0) {
@@ -22,7 +23,7 @@ export function Content() {
             )
         } else if (panelIndex == 1) {
             return (
-                <InfoPanel savedTickers={savedTickers}></InfoPanel>
+                <InfoPanel savedTickers={savedTickers} tickerStats={tickerStats} setTickerStats={setTickerStats}></InfoPanel>
             )
         }
     };

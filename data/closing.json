@@ -1,0 +1,34 @@
+[{
+    "status": "OK",
+    "from": "2024-01-18",
+    "symbol": "AAPL",
+    "open": 186.09,
+    "high": 189.14,
+    "low": 185.83,
+    "close": 188.63,
+    "volume": 77722754,
+    "afterHours": 188.69,
+    "preMarket": 182.55
+},
+{
+    "ticker": "AAPL",
+    "queryCount": 1,
+    "resultsCount": 1,
+    "adjusted": true,
+    "results": [
+        {
+            "T": "AAPL",
+            "v": 77722754,
+            "vw": 187.9358,
+            "o": 186.09,
+            "c": 188.63,
+            "h": 189.14,
+            "l": 185.83,
+            "t": 1705611600000,
+            "n": 787233
+        }
+    ],
+    "status": "OK",
+    "request_id": "88163ac838bfe11eaa155e5e8eea2855",
+    "count": 1
+}]
