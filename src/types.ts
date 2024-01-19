@@ -20,4 +20,5 @@ export interface TickerStat {
     h: number;  // high
     l: number;  // low
     c: number;  // close
+    t: number;  // timestamp
 }

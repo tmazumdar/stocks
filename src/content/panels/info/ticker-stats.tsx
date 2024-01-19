@@ -13,8 +13,7 @@ interface PromiseResponse {
 }
 
 export function TickerStats({ savedTickers, tickerStats, setTickerStats }: TickerStatsProps) {
-    
-
+    let statsArray = new Array<TickerStat>();
     useEffect(() => {
         // fetch previous closing prices for all saved tickers from api
         const promises: Promise<number>[] = savedTickers.map(t => {
@@ -23,12 +22,13 @@ export function TickerStats({ savedTickers, tickerStats, setTickerStats }: Ticke
 
         Promise.allSettled(promises)
             .then((res: any) => {
-                setTickerStats(res.map((r: PromiseResponse) => {
+                statsArray = res.map((r: PromiseResponse) => {
                     if (r.status === "fulfilled" && !!r.value) {
-                        return JSON.parse(r.value).results[0];
+                        return JSON.parse(r.value).results?.[0];
                     }
-                }));
-            })
+                });
+                setTickerStats(statsArray);
+            });
     }, []);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export function TickerStats({ savedTickers, tickerStats, setTickerStats }: Ticke
                         <div className="stat">                
                             <div className="stat-title">Ticker</div>
                             <div className="stat-value">{t.T}</div>
-                            <div className="stat-desc">Jan 1st - Feb 1st</div>
+                            <div className="stat-desc">{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(t.t)}</div>
                         </div>
                         <div className="stat">
                             <div className="stat-figure text-secondary">

@@ -21,7 +21,7 @@ const createWindow = (): void => {
   mainWindow = new BrowserWindow({
     icon: './src/assets/flying-money.png',
     height: 600,
-    width: 800,
+    width: 900,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
