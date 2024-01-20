@@ -27,6 +27,10 @@ export function Content() {
         
         window.api.fetchGroupedDaily(prevDateFormatted).then((res: string) => {
             statsArray = JSON.parse(res);
+            // populate percent high/low
+            statsArray.forEach((s: TickerStat) => {
+                s.cp = ((s.c - s.o) / s.o)*100;                
+            })
             setTickerStats(statsArray);
         });
     }, [savedTickers]);

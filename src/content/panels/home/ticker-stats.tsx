@@ -29,10 +29,15 @@ export function TickerStats({ tickerStats, setSavedTickers }: TickerStatsProps) 
             {tickerStats && tickerStats.map((t: TickerStat) => {
                 return (
                     <div className="stats shadow flex text-xs hover:bg-base-600" key={t.T}>
-                        <div className="stat relative group hover:text-primary">                
+                        <div className="stat relative group hover:text-primary">
+                            <div className="stat-figure text-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                            </div>
                             <div className="stat-title">Ticker</div>
                             <div className="stat-value">{t.T}</div>
-                            <div className="stat-desc">{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(t.t)}</div>
+                            <div className="stat-desc">{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: '2-digit'}).format(t.t)}</div>
                             <div className="absolute top-0 right-0 h-6 w-5 flex">
                                 <button className="text-slate-400 hover:text-primary hidden group-hover:block" onClick={(e) => handleRemove(e, t.T)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -43,28 +48,44 @@ export function TickerStats({ tickerStats, setSavedTickers }: TickerStatsProps) 
                         </div>
                         <div className="stat">
                             <div className="stat-figure text-secondary">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                                </svg>
                             </div>
-                            <div className="stat-title">Volume</div>
+                            <div className="stat-title">Volume (units)</div>
                             <div className="stat-value">{t.v.toLocaleString('en-US', {notation: 'compact', compactDisplay: 'short'})}</div>
+                            <div className="stat-desc">{t.n.toLocaleString('en-US', {notation: 'compact', compactDisplay: 'short'})} transactions</div>
                         </div>
             
                         <div className="stat">
                             <div className="stat-figure text-secondary">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                                </svg>
                             </div>
-                            <div className="stat-title">Open</div>
+                            <div className="stat-title">Open ($)</div>
                             <div className="stat-value">{t.o.toFixed(2)}</div>
-                            <div className="stat-desc text-green-600">H↗︎ {t.h.toFixed(2)} (22%)</div>
+                            <div className="flex space-x-1">
+                                <div className="text-green-600">H↗︎ {t.h.toFixed(2)}</div>
+                                <div className="text-red-700  px-1">L↘︎ {t.l.toFixed(2)}</div>
+                            </div>
                         </div>
             
                         <div className="stat">
                             <div className="stat-figure text-secondary">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                                {t.cp > 0 ? 
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                                    </svg>
+                                   :
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                                    </svg>
+                                 }
                             </div>
-                            <div className="stat-title">Close</div>
+                            <div className="stat-title">Close ($)</div>
                             <div className="stat-value">{t.c.toFixed(2)}</div>
-                            <div className="stat-desc text-red-700">L↘︎ {t.l.toFixed(2)} (14%)</div>
+                            <div className={t.cp > 0 ? "text-green-600 stat-desc" : "text-red-700 stat-desc"}>{t.cp > 0 ? 'Gain' : 'Loss'} ({Math.abs(t.cp).toFixed(1)}%)</div>
                         </div>
             
                     </div>

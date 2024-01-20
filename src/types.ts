@@ -21,4 +21,6 @@ export interface TickerStat {
     l: number;  // low
     c: number;  // close
     t: number;  // timestamp
+    n: number;  // # of transactions
+    cp: number; // change percent
 }
