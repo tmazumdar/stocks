@@ -1,9 +1,12 @@
 A stock ticker tracking app
 
-![image](https://github.com/tmazumdar/stocks/assets/1673518/c7c877ab-3a00-4df5-b1d3-d39ebb07aa2c)
+![image](https://github.com/tmazumdar/stocks/assets/1673518/d77f233f-a9ed-48fb-9045-31b7180513df)
 
-![image](https://github.com/tmazumdar/stocks/assets/1673518/b10ea6bf-9e37-4885-9191-23f947910cb3)
 
-![image](https://github.com/tmazumdar/stocks/assets/1673518/df880e6b-d232-482a-a73d-79e69cdc7bdb)
+![image](https://github.com/tmazumdar/stocks/assets/1673518/6da6a97b-ca55-4251-8f0f-1deeae28fc94)
+
+
+![image](https://github.com/tmazumdar/stocks/assets/1673518/c49ad1c3-86b8-4418-978c-c988ff08ac79)
+
 
 
