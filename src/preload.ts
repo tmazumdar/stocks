@@ -18,6 +18,9 @@ let WINDOW_API = {
     },
     loadTickers: () => {
         return ipcRenderer.invoke("loadTickers");
+    },
+    removeTicker: (ticker: string) => {
+        return ipcRenderer.invoke("removeTicker", ticker);
     }
 }
 

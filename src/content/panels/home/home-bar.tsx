@@ -1,4 +1,4 @@
-export function InfoBar() {
+export function HomeBar() {
     return (
         <div className="navbar bg-base-200 rounded-lg flex">
             <div className="px-1 flex-none">

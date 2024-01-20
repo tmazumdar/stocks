@@ -2,23 +2,26 @@ import { useState } from 'react';
 import { TickerStat } from '../../../types';
 
 type TickerStatsProps = {
-    tickerStats: Array<TickerStat>
+    tickerStats: Array<TickerStat>,
+    setSavedTickers: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-export function TickerStats({ tickerStats }: TickerStatsProps) {
+export function TickerStats({ tickerStats, setSavedTickers }: TickerStatsProps) {
     const [tickerToRemove,setTickerToRemove] = useState("");
     const handleRemove = (e: React.MouseEvent<HTMLButtonElement>, ticker: string) => {
-        //document.getElementById('remove_ticker_confirm_modal').showModal()
         setTickerToRemove(ticker);
-        document.querySelector("dialog").showModal();
+        (document.querySelector<HTMLDialogElement>("#remove_ticker_confirm_modal") as any).showModal();
     };
 
     const removeTicker = (ticker: string) => {
-
+        window.api.removeTicker(ticker).then((res: string) => {
+            setSavedTickers(JSON.parse(res));
+            dismissDialog();
+        });
     };
 
     const dismissDialog = () => {
-        document.querySelector("dialog").close();
+        (document.querySelector<HTMLDialogElement>("#remove_ticker_confirm_modal") as any).close();
     };
 
     return (
@@ -32,8 +35,8 @@ export function TickerStats({ tickerStats }: TickerStatsProps) {
                             <div className="stat-desc">{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(t.t)}</div>
                             <div className="absolute top-0 right-0 h-6 w-5 flex">
                                 <button className="text-slate-400 hover:text-primary hidden group-hover:block" onClick={(e) => handleRemove(e, t.T)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
                                 </button>
                             </div>

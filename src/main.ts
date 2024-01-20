@@ -104,6 +104,22 @@ ipcMain.handle("loadTickers", (event, ...args) => {
   }
 });
 
+ipcMain.handle("removeTicker", (event, ...args) => {
+  // read data from saved config if any
+   let preferencesFileExists = fs.existsSync(preferencesfilePath);
+   
+   if (preferencesFileExists) {
+     let jsonData = fs.readFileSync(preferencesfilePath, "utf8");
+     var data = JSON.parse(jsonData);
+     var newTickerArray = data.filter((t: string) => {
+      return t !== args[0]
+     });
+     let saveData = JSON.stringify(newTickerArray);
+     fs.writeFileSync(preferencesfilePath, saveData);
+     return saveData;
+   }
+ });
+
 app.whenReady().then(() => {
   app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the

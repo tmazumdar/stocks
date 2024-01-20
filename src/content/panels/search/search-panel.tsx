@@ -14,17 +14,6 @@ export function SearchPanel({ savedTickers, setSavedTickers, tickerRows, setTick
     const [searchText, setSearchText] = useState("");
     const [showSaved, setShowSaved] = useState(false);
 
-    useEffect(() => {
-        // load tickers from appData file
-        // window.api.loadTickers().then((res: Array<string>) => {
-        //     setSavedTickers(res);
-        // });
-    }, []);
-
-    useEffect(() => {
-        // console.log(savedTickers);
-    }, [savedTickers]);
-
     const searchClickHandler = () => {
         // search from api
         window.api.fetchTickers(searchText).then((res: any) => {
