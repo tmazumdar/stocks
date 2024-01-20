@@ -10,7 +10,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 const appDataPath = app.getPath('appData');
 const preferencesfilePath = path.resolve(appDataPath, 'tt.preferences.json');
-// const dailyFilePath = path.resolve(appDataPath, 'tt.daily.json');
+const dailyFilePath = path.resolve(appDataPath, 'tt.daily.json');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -67,18 +67,13 @@ ipcMain.handle("fetchGroupedDaily", async (event, ...args) => {
   let data = await response.text();
   let statsArray = JSON.parse(data).results;
 
-  // fs.writeFile(dailyFilePath, data, () => {
-  //   console.log("Saved daily file.");
-  // })
   // read data from saved config if any
   let preferencesFileExists = fs.existsSync(preferencesfilePath);
 
-  if (preferencesFileExists) {
+  if (preferencesFileExists && statsArray) {
     let jsonData = fs.readFileSync(preferencesfilePath, "utf8");
     var savedTickers = JSON.parse(jsonData);
     let filteredArray = statsArray.filter((s: any) => savedTickers.indexOf(s.T) >= 0);
-    console.log("filteredArray count:", filteredArray.length);
-    console.log("savedTickers:", savedTickers);
     return JSON.stringify(filteredArray);
   }
 });
@@ -99,8 +94,7 @@ ipcMain.handle("loadTickers", (event, ...args) => {
   let preferencesFileExists = fs.existsSync(preferencesfilePath);
   
   if (preferencesFileExists) {
-    let jsonData = fs.readFileSync(preferencesfilePath, "utf8");
-    return JSON.parse(jsonData);
+    return fs.readFileSync(preferencesfilePath, "utf8");
   }
 });
 

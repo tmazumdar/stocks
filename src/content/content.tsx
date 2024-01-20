@@ -13,6 +13,13 @@ export function Content() {
     let statsArray = new Array<TickerStat>();
 
     useEffect(() => {
+        // load tickers from preferences file, this is needed for SearchPanel
+        window.api.loadTickers().then((res: string) => {
+            setSavedTickers(JSON.parse(res));
+        })
+    }, []);
+
+    useEffect(() => {
         // load prev closing data
         let date = new Date();
         let prevDate = new Date(date.setDate(date.getDate() - 1));

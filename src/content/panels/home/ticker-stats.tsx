@@ -25,7 +25,7 @@ export function TickerStats({ tickerStats, setSavedTickers }: TickerStatsProps) 
     };
 
     return (
-        <div className="h-96 overflow-y-scroll">
+        <div className="overflow-y-scroll" style={{height: 'calc(100vh - 160px)'}}>
             {tickerStats && tickerStats.map((t: TickerStat) => {
                 return (
                     <div className="stats shadow flex text-xs hover:bg-base-600" key={t.T}>
