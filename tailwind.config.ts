@@ -10,5 +10,10 @@ export default {
   plugins: [require('daisyui')],
   daisyui: {
     themes: ["nord","dim"]
+  },
+  variants: {
+    extend: {
+      display: ['group-hover']
+    }
   }
 }

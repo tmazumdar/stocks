@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { TickerStat } from '../../../types';
 
 type TickerStatsProps = {
@@ -5,16 +6,37 @@ type TickerStatsProps = {
 }
 
 export function TickerStats({ tickerStats }: TickerStatsProps) {
+    const [tickerToRemove,setTickerToRemove] = useState("");
+    const handleRemove = (e: React.MouseEvent<HTMLButtonElement>, ticker: string) => {
+        //document.getElementById('remove_ticker_confirm_modal').showModal()
+        setTickerToRemove(ticker);
+        document.querySelector("dialog").showModal();
+    };
+
+    const removeTicker = (ticker: string) => {
+
+    };
+
+    const dismissDialog = () => {
+        document.querySelector("dialog").close();
+    };
 
     return (
         <div className="h-96 overflow-y-scroll">
             {tickerStats && tickerStats.map((t: TickerStat) => {
                 return (
-                    <div className="stats shadow flex text-xs" key={t.T}>
-                        <div className="stat">                
+                    <div className="stats shadow flex text-xs hover:bg-base-600" key={t.T}>
+                        <div className="stat relative group hover:text-primary">                
                             <div className="stat-title">Ticker</div>
                             <div className="stat-value">{t.T}</div>
                             <div className="stat-desc">{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(t.t)}</div>
+                            <div className="absolute top-0 right-0 h-6 w-5 flex">
+                                <button className="text-slate-400 hover:text-primary hidden group-hover:block" onClick={(e) => handleRemove(e, t.T)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <div className="stat">
                             <div className="stat-figure text-secondary">
@@ -45,6 +67,17 @@ export function TickerStats({ tickerStats }: TickerStatsProps) {
                     </div>
                 )
             })}
+            <dialog id="remove_ticker_confirm_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Are you sure?</h3>
+                    <p className="py-4">{tickerToRemove} will be removed from saved preferences.</p>
+                    <button className="btn btn-ghost text-primary" onClick={() => removeTicker(tickerToRemove)}>Yes</button>
+                    <button className="btn btn-ghost" onClick={() => dismissDialog()}>No</button>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
         </div>        
     )
 }
