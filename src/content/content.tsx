@@ -21,11 +21,10 @@ export function Content() {
 
     useEffect(() => {
         // load prev closing data
-        let date = new Date();
-        let prevDate = new Date(date.setDate(date.getDate() - 1));
-        let prevDateFormatted = prevDate.toISOString().split('T')[0]    // get YYYY-MM-DD for api param
-        
-        window.api.fetchGroupedDaily(prevDateFormatted).then((res: string) => {
+        let prevBusinessDate = getPreviousBusinessDayDate();
+        let prevBusinessDateFormatted = prevBusinessDate.toISOString().split('T')[0]    // get YYYY-MM-DD for api param
+
+        window.api.fetchGroupedDaily(prevBusinessDateFormatted).then((res: string) => {
             statsArray = JSON.parse(res);
             // populate percent high/low
             statsArray.forEach((s: TickerStat) => {
@@ -34,6 +33,20 @@ export function Content() {
             setTickerStats(statsArray);
         });
     }, [savedTickers]);
+
+    const getPreviousBusinessDayDate = () => {
+        let date = new Date();
+
+        let dayOfWeek = date.getDay();
+        switch (dayOfWeek) {
+            case 1:     // monday: get last friday's date
+                return new Date(date.setDate(date.getDate() - 3));
+            case 0:     // sunday: get last friday's date
+                return new Date(date.setDate(date.getDate() - 2));
+            default:    // any other day: get previous day's date
+                return new Date(date.setDate(date.getDate() - 1));
+        }
+    }
 
     const panelMap = (panelIndex: number) => {
         if (panelIndex == 0) {
