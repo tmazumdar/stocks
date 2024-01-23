@@ -65,7 +65,7 @@ export function Content() {
             )
         } else if (panelIndex === 2) {
             return (
-                <ChartPanel></ChartPanel>
+                <ChartPanel savedTickers={savedTickers}></ChartPanel>
             )
         }
     };

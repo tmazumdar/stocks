@@ -11,9 +11,8 @@ import {  Chart as ChartJS,
 import { Line } from 'react-chartjs-2';
 
 
-type HomePanelProps = {
-    // tickerStats: Array<TickerStat>,
-    // setSavedTickers: React.Dispatch<React.SetStateAction<string[]>>
+type ChartPanelProps = {
+    savedTickers: Array<string>,
 }
 
 ChartJS.register(
@@ -33,7 +32,7 @@ export const options = {
         position: 'top' as const,
       },
       title: {
-        display: true,
+        display: false,
         text: 'Chart.js Line Chart',
       },
     },
@@ -59,11 +58,11 @@ export const data = {
     ],
 };
 
-export function ChartPanel({  }:HomePanelProps) {
+export function ChartPanel({ savedTickers }:ChartPanelProps) {
     return (
         <>
-            <ChartBar></ChartBar>
-            <div style={{height: 'calc(100vh - 160px)'}}>
+            <ChartBar savedTickers={savedTickers}></ChartBar>
+            <div style={{height: 'calc(100vh - 160px)'}} className="bg-base-300">
                 <Line options={options} data={data} />
             </div>
         </>
