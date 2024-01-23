@@ -53,7 +53,7 @@ export function SearchPanel({ savedTickers, setSavedTickers, tickerRows, setTick
         <>
             <SearchBar searchText={searchText} setSearchText={setSearchText} onSearchClick={searchClickHandler}></SearchBar>  
             <TickerTable rows={tickerRows} savedTickers={savedTickers} toggleTicker={toggleTicker}></TickerTable>
-            {showSaved && <div className="toast toast-bottom">
+            {showSaved && <div className="toast toast-bottom" style={{zIndex: 99}}>
                 <div className="alert alert-success">
                     <span>Saved.</span>
                 </div>
