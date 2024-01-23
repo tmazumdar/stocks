@@ -3,6 +3,7 @@ import { BottomNav } from './bottom-nav';
 import { HomePanel } from './panels/home/home-panel';
 import { SearchPanel } from './panels/search/search-panel';
 import { TickerRow, TickerStat } from '../types';
+import { ChartPanel } from './panels/chart/chart-panel';
 
 export function Content() {
     
@@ -48,12 +49,12 @@ export function Content() {
         }
     }
 
-    const panelMap = (panelIndex: number) => {
-        if (panelIndex == 0) {
+    const getActivePanel = (panelIndex: number) => {
+        if (panelIndex === 0) {
             return (
                 <HomePanel tickerStats={tickerStats} setSavedTickers={setSavedTickers}></HomePanel>
             )
-        } else if (panelIndex == 1) {
+        } else if (panelIndex === 1) {
             return (
                 <SearchPanel 
                     savedTickers={savedTickers} 
@@ -62,12 +63,16 @@ export function Content() {
                     setTickerRows={setTickerRows}
                 ></SearchPanel>
             )
+        } else if (panelIndex === 2) {
+            return (
+                <ChartPanel></ChartPanel>
+            )
         }
     };
 
     return (
         <div>
-            {panelMap(activePanelIndex)}
+            {getActivePanel(activePanelIndex)}
             <BottomNav activePanelIndex={activePanelIndex} setActivePanelIndex={setActivePanelIndex}></BottomNav>            
         </div>
     )
