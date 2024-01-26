@@ -1,8 +1,8 @@
 {
   "name": "stocks",
   "productName": "stocks",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "0.8.1",
+  "description": "Ticker Tracker - a stock tracking application",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -33,6 +33,7 @@
     "css-loader": "^6.0.0",
     "daisyui": "^4.6.0",
     "electron": "28.1.3",
+    "electron-builder": "^24.9.1",
     "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
