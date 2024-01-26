@@ -1,16 +1,41 @@
 import { useEffect, useState } from "react";
 import { BottomNav } from "./bottom-nav";
+import { ChartPanel } from "./panels/chart/chart-panel";
 import { HomePanel } from "./panels/home/home-panel";
 import { SearchPanel } from "./panels/search/search-panel";
+
 import { TickerRow, TickerStat } from "../types";
-import { ChartPanel } from "./panels/chart/chart-panel";
+import {
+	getPreviousBusinessDayDate,
+	getFormattedDate,
+} from "../util/date-util";
 
 export function Content() {
 	const [activePanelIndex, setActivePanelIndex] = useState(2);
 	const [savedTickers, setSavedTickers] = useState<Array<string>>([]);
 	const [tickerRows, setTickerRows] = useState<Array<TickerRow>>([]);
 	const [tickerStats, setTickerStats] = useState<TickerStat[]>([]);
-	let statsArray = new Array<TickerStat>();
+	const [ticker, setTicker] = useState("");
+	const [range, setRange] = useState("D");
+	const [apiData, setApiData] = useState([]);
+
+	useEffect(() => {
+		console.log(apiData);
+	}, [apiData]);
+	useEffect(() => {
+		//console.log(ticker);
+		console.log("ticker: ", ticker);
+		if (ticker.length > 0) {
+			window.api
+				.fetchAggregates(ticker, 10, "minute", "2024-01-25", "2024-01-26", 1250)
+				.then((res: any) => {
+					setApiData(JSON.parse(res).results);
+				});
+		}
+	}, [ticker]);
+	useEffect(() => {
+		//console.log(range);
+	}, [range]);
 
 	useEffect(() => {
 		// load tickers from preferences file, this is needed for SearchPanel
@@ -27,7 +52,7 @@ export function Content() {
 		window.api
 			.fetchGroupedDaily(prevBusinessDateFormatted)
 			.then((res: string) => {
-				statsArray = JSON.parse(res);
+				let statsArray = JSON.parse(res);
 				// populate percent high/low
 				statsArray.forEach((s: TickerStat) => {
 					s.cp = ((s.c - s.o) / s.o) * 100;
@@ -35,27 +60,6 @@ export function Content() {
 				setTickerStats(statsArray);
 			});
 	}, [savedTickers]);
-
-	const getPreviousBusinessDayDate = () => {
-		let date = new Date();
-		let dayOfWeek = date.getDay();
-		switch (dayOfWeek) {
-			case 1: // monday: get last friday's date
-				return new Date(date.setDate(date.getDate() - 3));
-			case 0: // sunday: get last friday's date
-				return new Date(date.setDate(date.getDate() - 2));
-			default: // any other day: get previous day's date
-				return new Date(date.setDate(date.getDate() - 1));
-		}
-	};
-
-	const getFormattedDate = (date: Date) => {
-		// get YYYY-MM-DD for api param
-		var year = date.toLocaleString("default", { year: "numeric" });
-		var month = date.toLocaleString("default", { month: "2-digit" });
-		var day = date.toLocaleString("default", { day: "2-digit" });
-		return year + "-" + month + "-" + day;
-	};
 
 	const getActivePanel = (panelIndex: number) => {
 		if (panelIndex === 0) {
@@ -75,7 +79,16 @@ export function Content() {
 				></SearchPanel>
 			);
 		} else if (panelIndex === 2) {
-			return <ChartPanel savedTickers={savedTickers}></ChartPanel>;
+			return (
+				<ChartPanel
+					savedTickers={savedTickers}
+					ticker={ticker}
+					range={range}
+					apiData={apiData}
+					setTicker={setTicker}
+					setRange={setRange}
+				></ChartPanel>
+			);
 		}
 	};
 

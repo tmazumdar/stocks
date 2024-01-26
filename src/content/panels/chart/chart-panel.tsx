@@ -4,32 +4,22 @@ import { ChartInstance } from "./chart-instance";
 import { AggregatePoint } from "../../../types";
 
 type ChartPanelProps = {
+	apiData: Array<AggregatePoint>;
 	savedTickers: Array<string>;
+	ticker: string;
+	setTicker: React.Dispatch<React.SetStateAction<string>>;
+	range: string;
+	setRange: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export function ChartPanel({ savedTickers }: ChartPanelProps) {
-	const [ticker, setTicker] = useState("");
-	const [range, setRange] = useState("D");
-	const [apiData, setApiData] = useState([]);
-
-	useEffect(() => {
-		console.log(apiData);
-	}, [apiData]);
-	useEffect(() => {
-		//console.log(ticker);
-		console.log("ticker: ", ticker);
-		if (ticker.length > 0) {
-			window.api
-				.fetchAggregates(ticker, 10, "minute", "2024-01-25", "2024-01-26", 1250)
-				.then((res: any) => {
-					setApiData(JSON.parse(res).results);
-				});
-		}
-	}, [ticker]);
-	useEffect(() => {
-		//console.log(range);
-	}, [range]);
-
+export function ChartPanel({
+	apiData,
+	savedTickers,
+	ticker,
+	setTicker,
+	range,
+	setRange,
+}: ChartPanelProps) {
 	return (
 		<>
 			<ChartBar
