@@ -24,3 +24,14 @@ export interface TickerStat {
     n: number;  // # of transactions
     cp: number; // change percent
 }
+
+export interface AggregatePoint {
+    c: number;  // close
+    h: number;  // high
+    l: number;  // low
+    n: number;  // # of transactions
+    o: number;  // open
+    t: number;  // timestamp
+    v: number;  // volume
+    vw: number; // volume weighted avg price
+}

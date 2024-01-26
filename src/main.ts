@@ -81,8 +81,11 @@ ipcMain.handle("fetchGroupedDaily", async (event, ...args) => {
 
 ipcMain.handle("fetchAggregates", async (event, ...args) => {
   console.log(args);
-  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${args[0]}/range/${args[1]}/${args[2]}/${args[3]}/${args[4]}?adjusted=true&sort=asc&limit=120&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
-  return await response.text();
+  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${args[0]}/range/${args[1]}/${args[2]}/${args[3]}/${args[4]}?adjusted=true&sort=asc&limit=${args[5]}&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
+  
+  var data = await response.text();
+  console.log("response: ", data)
+  return data;
 });
 
 ipcMain.handle("fetchPrevClose", async (event, ...args) => {

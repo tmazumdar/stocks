@@ -1,67 +1,135 @@
-import {  Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { AggregatePoint } from "../../../types";
 
 type ChartInstanceProps = {
-    // data: Array<string>,
-}
+	apiData: Array<AggregatePoint>;
+};
 
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend
 );
 
 export const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: false,
-        text: 'Chart.js Line Chart',
-      },
-    },
+	responsive: true,
+	plugins: {
+		legend: {
+			position: "top" as const,
+		},
+		datalabels: {},
+		title: {
+			display: false,
+			text: "Chart.js Line Chart",
+		},
+	},
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+export function ChartInstance({ apiData }: ChartInstanceProps) {
+	//const labels = ["January", "February", "March", "April", "May", "June", "July"];
+	let labels;
+	let data;
+	if (!!apiData) {
+		labels = apiData.map((m) =>
+			// new Intl.DateTimeFormat("en-US", {
+			// 	year: "numeric",
+			// 	month: "short",
+			// 	day: "2-digit",
+			// 	hour: "2-digit",
+			// 	minute: "2-digit",
+			// }).format(m.t)
+			new Date(m.t).toLocaleDateString("en-US", {
+				day: "2-digit",
+				month: "short",
+				hour: "2-digit",
+				minute: "2-digit",
+			})
+		);
 
-export const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: labels.map(() => Math.random()),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: labels.map(() => Math.random()),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-};
-
-export function ChartInstance({  }:ChartInstanceProps) {
-    return (
-        <>
-            <div style={{height: 'calc(100vh - 160px)'}} className="bg-base-300">
-                <Line options={options} data={data} />
-            </div>
-        </>
-    )
-};
+		data = {
+			labels,
+			datasets: [
+				{
+					label: "High Price",
+					data: labels.map((l) => {
+						return apiData.filter((m) => {
+							return (
+								// new Intl.DateTimeFormat("en-US", {
+								// 	year: "numeric",
+								// 	month: "short",
+								// 	day: "2-digit",
+								// 	hour: "2-digit",
+								// 	minute: "2-digit",
+								// }).format(m.t) == l
+								new Date(m.t).toLocaleDateString("en-US", {
+									day: "2-digit",
+									month: "short",
+									hour: "2-digit",
+									minute: "2-digit",
+								}) === l
+							);
+						})[0].h;
+					}),
+					borderColor: "green",
+					backgroundColor: "green",
+				},
+				{
+					label: "Volume Weighted Price",
+					data: labels.map((l) => {
+						return apiData.filter((m) => {
+							return (
+								new Date(m.t).toLocaleDateString("en-US", {
+									day: "2-digit",
+									month: "short",
+									hour: "2-digit",
+									minute: "2-digit",
+								}) === l
+							);
+						})[0].vw;
+					}),
+					borderColor: "yellow",
+					backgroundColor: "yellow",
+				},
+				{
+					label: "Low price",
+					data: labels.map((l) => {
+						return apiData.filter((m) => {
+							return (
+								new Date(m.t).toLocaleDateString("en-US", {
+									day: "2-digit",
+									month: "short",
+									hour: "2-digit",
+									minute: "2-digit",
+								}) === l
+							);
+						})[0].l;
+					}),
+					borderColor: "red",
+					backgroundColor: "red",
+				},
+			],
+		};
+	}
+	return (
+		<>
+			<div style={{ height: "calc(100vh - 160px)" }} className="bg-base-300">
+				{apiData && <Line options={options} data={data} />}
+				{!apiData && <p>No data from API!</p>}
+			</div>
+		</>
+	);
+}

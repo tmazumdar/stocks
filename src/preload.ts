@@ -10,8 +10,8 @@ let WINDOW_API = {
     fetchGroupedDaily: async(searchText: string) => {
         return await ipcRenderer.invoke("fetchGroupedDaily", searchText);
     },
-    fetchAggregates: async(ticker: string, multiplier: number, timespan: string, from: string, to: string) => {
-        return await ipcRenderer.invoke("fetchAggregates", ticker, multiplier, timespan, from, to);
+    fetchAggregates: async(ticker: string, multiplier: number, timespan: string, from: string, to: string, limit: number) => {
+        return await ipcRenderer.invoke("fetchAggregates", ticker, multiplier, timespan, from, to, limit);
     },
     fetchPrevClose: async(searchText: string) => {
         return await ipcRenderer.invoke("fetchPrevClose", searchText);

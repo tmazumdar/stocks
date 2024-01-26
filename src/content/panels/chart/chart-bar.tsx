@@ -60,9 +60,7 @@ export function ChartBar({
 					onChange={(e) => handleSelectChange(e)}
 					value={ticker}
 				>
-					<option disabled defaultValue={""}>
-						Select Ticker to plot..
-					</option>
+					<option defaultValue={""}>Select Ticker to plot..</option>
 					{savedTickers &&
 						savedTickers.map((t) => {
 							return (
