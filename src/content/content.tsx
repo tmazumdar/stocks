@@ -23,7 +23,7 @@ export function Content() {
     useEffect(() => {
         // load prev closing data
         let prevBusinessDate = getPreviousBusinessDayDate();
-        let prevBusinessDateFormatted = prevBusinessDate.toISOString().split('T')[0]    // get YYYY-MM-DD for api param
+        let prevBusinessDateFormatted = getFormattedDate(prevBusinessDate);
 
         window.api.fetchGroupedDaily(prevBusinessDateFormatted).then((res: string) => {
             statsArray = JSON.parse(res);
@@ -37,7 +37,6 @@ export function Content() {
 
     const getPreviousBusinessDayDate = () => {
         let date = new Date();
-
         let dayOfWeek = date.getDay();
         switch (dayOfWeek) {
             case 1:     // monday: get last friday's date
@@ -47,7 +46,15 @@ export function Content() {
             default:    // any other day: get previous day's date
                 return new Date(date.setDate(date.getDate() - 1));
         }
-    }
+    };
+    
+    const getFormattedDate = (date: Date) => {
+        // get YYYY-MM-DD for api param
+        var year = date.toLocaleString("default", { year: "numeric" });
+        var month = date.toLocaleString("default", { month: "2-digit" });
+        var day = date.toLocaleString("default", { day: "2-digit" });
+        return year + "-" + month + "-" + day;;
+    };
 
     const getActivePanel = (panelIndex: number) => {
         if (panelIndex === 0) {

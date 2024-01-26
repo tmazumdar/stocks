@@ -69,13 +69,20 @@ ipcMain.handle("fetchGroupedDaily", async (event, ...args) => {
 
   // read data from saved config if any
   let preferencesFileExists = fs.existsSync(preferencesfilePath);
-
+  // console.log("preferencesFileExists:", preferencesFileExists);
+  // console.log("statsArray:", statsArray);
   if (preferencesFileExists && statsArray) {
     let jsonData = fs.readFileSync(preferencesfilePath, "utf8");
     var savedTickers = JSON.parse(jsonData);
     let filteredArray = statsArray.filter((s: any) => savedTickers.indexOf(s.T) >= 0);
     return JSON.stringify(filteredArray);
   }
+});
+
+ipcMain.handle("fetchAggregates", async (event, ...args) => {
+  console.log(args);
+  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${args[0]}/range/${args[1]}/${args[2]}/${args[3]}/${args[4]}?adjusted=true&sort=asc&limit=120&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
+  return await response.text();
 });
 
 ipcMain.handle("fetchPrevClose", async (event, ...args) => {
