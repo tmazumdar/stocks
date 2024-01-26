@@ -11,7 +11,7 @@ import {
 } from "../util/date-util";
 
 export function Content() {
-	const [activePanelIndex, setActivePanelIndex] = useState(2);
+	const [activePanelIndex, setActivePanelIndex] = useState(0);
 	const [savedTickers, setSavedTickers] = useState<Array<string>>([]);
 	const [tickerRows, setTickerRows] = useState<Array<TickerRow>>([]);
 	const [tickerStats, setTickerStats] = useState<TickerStat[]>([]);
