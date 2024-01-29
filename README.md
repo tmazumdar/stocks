@@ -1,4 +1,15 @@
-A stock ticker tracking app
+A stock ticker tracking app that runs on desktop (Windows, MacOS, Linux)
+
+# clone
+`git clone https://github.com/tmazumdar/stocks.git`
+
+# build
+`npm install`
+
+# run
+`npm start`
+
+# Screenshots
 
 ![image](https://github.com/tmazumdar/stocks/assets/1673518/d77f233f-a9ed-48fb-9045-31b7180513df)
 
