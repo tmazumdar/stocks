@@ -9,6 +9,10 @@ A stock ticker tracking app that runs on desktop (Windows, MacOS, Linux)
 # run
 `npm start`
 
+# package
+`npm run make`
+A distributable package will be created in `out` folder
+
 # Screenshots
 
 ![image](https://github.com/tmazumdar/stocks/assets/1673518/d77f233f-a9ed-48fb-9045-31b7180513df)
