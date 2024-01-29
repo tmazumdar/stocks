@@ -15,10 +15,7 @@ const config: ForgeConfig = {
     icon: '.src/assets/flying-money.png'
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({
-    iconUrl: 'https://cdn-icons-png.flaticon.com/512/10017/10017650.png',
-    setupIcon: './src/assets/flying-money.png'
-  }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
