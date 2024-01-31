@@ -61,6 +61,7 @@ export function ChartInstance({
 						}
 						if (
 							context.dataset.label !== "Volume" &&
+							context.dataset.label !== "Transactions" &&
 							context.parsed.y !== null
 						) {
 							label += new Intl.NumberFormat("en-US", {
@@ -93,7 +94,7 @@ export function ChartInstance({
 				title: {
 					display: true,
 					padding: 4,
-					text: "Transactions",
+					text: "# of Units",
 				},
 				// grid line settings
 				grid: {
@@ -137,6 +138,8 @@ export function ChartInstance({
 						// above: "rgb(60, 02, 42)",
 						// below: "rgb(45, 24, 42)",
 					},
+					borderWidth: 2,
+					pointRadius: 1,
 					yAxisID: "y",
 				},
 				{
@@ -156,6 +159,8 @@ export function ChartInstance({
 					borderColor: "rgb(199, 146, 232)",
 					backgroundColor: "rgb(199, 146, 232)",
 					tension: 0.2,
+					borderWidth: 2,
+					pointRadius: 1,
 					yAxisID: "y",
 				},
 				{
@@ -175,6 +180,8 @@ export function ChartInstance({
 					borderColor: "rgb(255, 124, 92)",
 					backgroundColor: "rgb(255, 124, 92)",
 					tension: 0.2,
+					borderWidth: 2,
+					pointRadius: 1,
 					yAxisID: "y",
 				},
 				{
@@ -194,6 +201,29 @@ export function ChartInstance({
 					borderColor: "rgb(94, 129, 171)",
 					backgroundColor: "rgb(94, 129, 171)",
 					tension: 0.4,
+					borderWidth: 3,
+					pointRadius: 1,
+					yAxisID: "y1",
+				},
+				{
+					label: "Transactions",
+					data: labels.map((l) => {
+						return apiData.filter((m) => {
+							return (
+								new Date(m.t).toLocaleDateString("en-US", {
+									day: "2-digit",
+									month: "short",
+									hour: "2-digit",
+									minute: "2-digit",
+								}) === l
+							);
+						})[0].n;
+					}),
+					borderColor: "rgb(294, 229, 271)",
+					backgroundColor: "rgb(294, 229, 271)",
+					tension: 0.4,
+					borderWidth: 3,
+					pointRadius: 1,
 					yAxisID: "y1",
 				},
 			],
@@ -201,9 +231,13 @@ export function ChartInstance({
 	}
 	return (
 		<>
-			<div style={{ height: "calc(100vh - 160px)" }} className="bg-transparent">
+			<div
+				style={{
+					height: apiError ? "calc(100vh - 242px)" : "calc(100vh - 160px)",
+				}}
+				className="bg-transparent"
+			>
 				{apiData && <Line options={options} data={data} />}
-				{!apiData && <p>No data from API!</p>}
 			</div>
 		</>
 	);
