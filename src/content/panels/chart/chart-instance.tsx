@@ -10,6 +10,7 @@ import {
 	Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import type { ChartData, ChartOptions } from "chart.js";
 import { AggregatePoint } from "../../../types";
 
 type ChartInstanceProps = {
@@ -35,32 +36,74 @@ export function ChartInstance({
 }: ChartInstanceProps) {
 	//const labels = ["January", "February", "March", "April", "May", "June", "July"];
 	let labels;
-	let data;
+	let data: ChartData<"line">;
 
-	let options = {
+	let options: ChartOptions<"line"> = {
 		responsive: true,
 		plugins: {
 			legend: {
 				display: apiData && apiData.length > 0,
 				position: "top" as const,
 			},
-			datalabels: {},
+			//datalabels: {},
 			title: {
 				display: !!displayTicker,
 				text: `${displayTicker} Chart`,
+			},
+			tooltip: {
+				callbacks: {
+					label: function (context: any) {
+						let label = context.dataset.label || "";
+						if (label) {
+							label += ": ";
+						}
+						console.log(context);
+						if (
+							context.dataset.label !== "Volume" &&
+							context.parsed.y !== null
+						) {
+							label += new Intl.NumberFormat("en-US", {
+								style: "currency",
+								currency: "USD",
+							}).format(context.parsed.y);
+						} else {
+							label += context.formattedValue;
+						}
+						return label;
+					},
+				},
+			},
+		},
+		scales: {
+			y: {
+				type: "linear",
+				display: true,
+				position: "left",
+				title: {
+					display: true,
+					padding: 4,
+					text: "($)",
+				},
+			},
+			y1: {
+				type: "linear",
+				display: true,
+				position: "right",
+				title: {
+					display: true,
+					padding: 4,
+					text: "Transactions",
+				},
+				// grid line settings
+				grid: {
+					drawOnChartArea: false, // only want the grid lines for one axis to show up
+				},
 			},
 		},
 	};
 
 	if (!!apiData) {
 		labels = apiData.map((m) =>
-			// new Intl.DateTimeFormat("en-US", {
-			// 	year: "numeric",
-			// 	month: "short",
-			// 	day: "2-digit",
-			// 	hour: "2-digit",
-			// 	minute: "2-digit",
-			// }).format(m.t)
 			new Date(m.t).toLocaleDateString("en-US", {
 				day: "2-digit",
 				month: "short",
@@ -77,13 +120,6 @@ export function ChartInstance({
 					data: labels.map((l) => {
 						return apiData.filter((m) => {
 							return (
-								// new Intl.DateTimeFormat("en-US", {
-								// 	year: "numeric",
-								// 	month: "short",
-								// 	day: "2-digit",
-								// 	hour: "2-digit",
-								// 	minute: "2-digit",
-								// }).format(m.t) == l
 								new Date(m.t).toLocaleDateString("en-US", {
 									day: "2-digit",
 									month: "short",
@@ -95,6 +131,7 @@ export function ChartInstance({
 					}),
 					borderColor: "green",
 					backgroundColor: "green",
+					yAxisID: "y",
 				},
 				{
 					label: "Volume Weighted Price",
@@ -112,6 +149,7 @@ export function ChartInstance({
 					}),
 					borderColor: "yellow",
 					backgroundColor: "yellow",
+					yAxisID: "y",
 				},
 				{
 					label: "Low price",
@@ -129,6 +167,25 @@ export function ChartInstance({
 					}),
 					borderColor: "red",
 					backgroundColor: "red",
+					yAxisID: "y",
+				},
+				{
+					label: "Volume",
+					data: labels.map((l) => {
+						return apiData.filter((m) => {
+							return (
+								new Date(m.t).toLocaleDateString("en-US", {
+									day: "2-digit",
+									month: "short",
+									hour: "2-digit",
+									minute: "2-digit",
+								}) === l
+							);
+						})[0].v;
+					}),
+					borderColor: "blue",
+					backgroundColor: "blue",
+					yAxisID: "y1",
 				},
 			],
 		};

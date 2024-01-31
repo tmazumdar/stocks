@@ -62,7 +62,9 @@ export function ChartPanel({
 					{remainingTime > 0 && (
 						<div
 							className="radial-progress text-secondary"
-							style={{ "--value": (remainingTime * 100) / 30 }}
+							style={
+								{ "--value": (remainingTime * 100) / 30 } as React.CSSProperties
+							}
 							role="progressbar"
 						>
 							{remainingTime}s
