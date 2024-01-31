@@ -29,7 +29,7 @@ export function Content() {
 			window.api
 				.fetchAggregates(
 					ticker,
-					15,
+					10,
 					"minute",
 					"1706538600000",
 					"1706562000000",

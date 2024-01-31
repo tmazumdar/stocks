@@ -8,6 +8,7 @@ import {
 	Title,
 	Tooltip,
 	Legend,
+	Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import type { ChartData, ChartOptions } from "chart.js";
@@ -26,7 +27,8 @@ ChartJS.register(
 	LineElement,
 	Title,
 	Tooltip,
-	Legend
+	Legend,
+	Filler
 );
 
 export function ChartInstance({
@@ -57,7 +59,6 @@ export function ChartInstance({
 						if (label) {
 							label += ": ";
 						}
-						console.log(context);
 						if (
 							context.dataset.label !== "Volume" &&
 							context.parsed.y !== null
@@ -129,8 +130,13 @@ export function ChartInstance({
 							);
 						})[0].h;
 					}),
-					borderColor: "green",
-					backgroundColor: "green",
+					borderColor: "rgb(160, 232, 142)",
+					tension: 0.2,
+					fill: {
+						target: 2,
+						// above: "rgb(60, 02, 42)",
+						// below: "rgb(45, 24, 42)",
+					},
 					yAxisID: "y",
 				},
 				{
@@ -147,8 +153,9 @@ export function ChartInstance({
 							);
 						})[0].vw;
 					}),
-					borderColor: "yellow",
-					backgroundColor: "yellow",
+					borderColor: "rgb(199, 146, 232)",
+					backgroundColor: "rgb(199, 146, 232)",
+					tension: 0.2,
 					yAxisID: "y",
 				},
 				{
@@ -165,8 +172,9 @@ export function ChartInstance({
 							);
 						})[0].l;
 					}),
-					borderColor: "red",
-					backgroundColor: "red",
+					borderColor: "rgb(255, 124, 92)",
+					backgroundColor: "rgb(255, 124, 92)",
+					tension: 0.2,
 					yAxisID: "y",
 				},
 				{
@@ -183,8 +191,9 @@ export function ChartInstance({
 							);
 						})[0].v;
 					}),
-					borderColor: "blue",
-					backgroundColor: "blue",
+					borderColor: "rgb(94, 129, 171)",
+					backgroundColor: "rgb(94, 129, 171)",
+					tension: 0.4,
 					yAxisID: "y1",
 				},
 			],
@@ -192,7 +201,7 @@ export function ChartInstance({
 	}
 	return (
 		<>
-			<div style={{ height: "calc(100vh - 160px)" }} className="bg-base-300">
+			<div style={{ height: "calc(100vh - 160px)" }} className="bg-transparent">
 				{apiData && <Line options={options} data={data} />}
 				{!apiData && <p>No data from API!</p>}
 			</div>
