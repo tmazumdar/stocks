@@ -6,6 +6,7 @@ type HomePanelProps = {
 	range: string;
 	setRange: React.Dispatch<SetStateAction<string>>;
 	savedTickers: Array<string>;
+	apiError: boolean;
 };
 
 export function ChartBar({
@@ -14,6 +15,7 @@ export function ChartBar({
 	setTicker,
 	range,
 	setRange,
+	apiError,
 }: HomePanelProps) {
 	const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (
 		e
@@ -56,7 +58,8 @@ export function ChartBar({
 			</div>
 			<div className="flex-1 px-8">
 				<select
-					className="select select-bordered select-ghost select-sm w-full max-w-xs"
+					disabled={apiError}
+					className="select select-bordered select-md w-full max-w-xs"
 					onChange={(e) => handleSelectChange(e)}
 					value={ticker}
 				>
@@ -74,8 +77,9 @@ export function ChartBar({
 			<div className="flex-1">
 				<div className="join">
 					<input
-						className="join-item btn btn-sm"
-						checked
+						disabled={apiError}
+						className="join-item btn btn-md"
+						checked={range === "D"}
 						type="radio"
 						name="options"
 						aria-label="D"
@@ -83,7 +87,9 @@ export function ChartBar({
 						onClick={(e) => handleRangeClick(e)}
 					/>
 					<input
-						className="join-item btn btn-sm"
+						disabled={apiError}
+						className="join-item btn btn-md"
+						checked={range === "W"}
 						type="radio"
 						name="options"
 						aria-label="W"
@@ -91,7 +97,9 @@ export function ChartBar({
 						onClick={(e) => handleRangeClick(e)}
 					/>
 					<input
-						className="join-item btn btn-sm"
+						disabled={apiError}
+						className="join-item btn btn-md"
+						checked={range === "M"}
 						type="radio"
 						name="options"
 						aria-label="M"
@@ -99,7 +107,9 @@ export function ChartBar({
 						onClick={(e) => handleRangeClick(e)}
 					/>
 					<input
-						className="join-item btn btn-sm"
+						disabled={apiError}
+						className="join-item btn btn-md"
+						checked={range === "6M"}
 						type="radio"
 						name="options"
 						aria-label="6M"
@@ -107,7 +117,9 @@ export function ChartBar({
 						onClick={(e) => handleRangeClick(e)}
 					/>
 					<input
-						className="join-item btn btn-sm"
+						disabled={apiError}
+						className="join-item btn btn-md"
+						checked={range == "YTD"}
 						type="radio"
 						name="options"
 						aria-label="YTD"
@@ -115,7 +127,9 @@ export function ChartBar({
 						onClick={(e) => handleRangeClick(e)}
 					/>
 					<input
-						className="join-item btn btn-sm"
+						disabled={apiError}
+						className="join-item btn btn-md"
+						checked={range == "Y"}
 						type="radio"
 						name="options"
 						aria-label="Y"
@@ -123,19 +137,13 @@ export function ChartBar({
 						onClick={(e) => handleRangeClick(e)}
 					/>
 					<input
-						className="join-item btn btn-sm"
+						disabled={apiError}
+						className="join-item btn btn-md"
+						checked={range == "5Y"}
 						type="radio"
 						name="options"
 						aria-label="5Y"
 						value={"5Y"}
-						onClick={(e) => handleRangeClick(e)}
-					/>
-					<input
-						className="join-item btn btn-sm"
-						type="radio"
-						name="options"
-						aria-label="Max"
-						value={"Max"}
 						onClick={(e) => handleRangeClick(e)}
 					/>
 				</div>

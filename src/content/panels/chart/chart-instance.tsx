@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -135,29 +136,6 @@ export function ChartInstance({
 	return (
 		<>
 			<div style={{ height: "calc(100vh - 160px)" }} className="bg-base-300">
-				{apiError && (
-					<div role="alert" className="alert shadow-lg alert-warning">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							className="stroke-info shrink-0 w-6 h-6"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="2"
-								d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path>
-						</svg>
-						<div>
-							<h3 className="font-bold">API limit reached ! 😅</h3>
-							<div className="text-xs">
-								Max API requests of 5/min exceeded. Please wait and retry 🙏!
-							</div>
-						</div>
-					</div>
-				)}
 				{apiData && <Line options={options} data={data} />}
 				{!apiData && <p>No data from API!</p>}
 			</div>

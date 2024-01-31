@@ -20,6 +20,7 @@ export function Content() {
 	const [apiError, setApiError] = useState(false);
 	const [range, setRange] = useState("D");
 	const [apiData, setApiData] = useState([]);
+	const [remainingTime, setRemainingTime] = useState(0);
 
 	useEffect(() => {
 		//console.log(ticker);
@@ -41,8 +42,10 @@ export function Content() {
 						console.log("results: ", response);
 						setApiError(false);
 						setApiData(response.results);
+						setRemainingTime(0);
 					} else {
 						setApiError(true);
+						setRemainingTime(remainingTime + 30);
 						console.log("results: ", response);
 					}
 				});
@@ -77,6 +80,14 @@ export function Content() {
 			});
 	}, [savedTickers]);
 
+	setTimeout(() => {
+		if (remainingTime > 0) {
+			console.log("subtracting:", remainingTime);
+			setRemainingTime(remainingTime - 1);
+			if (remainingTime === 1) setApiError(false);
+		}
+	}, 1000);
+
 	const getActivePanel = (panelIndex: number) => {
 		if (panelIndex === 0) {
 			return (
@@ -102,6 +113,8 @@ export function Content() {
 					range={range}
 					displayTicker={displayTicker}
 					apiError={apiError}
+					remainingTime={remainingTime}
+					setRemainingTime={setRemainingTime}
 					apiData={apiData}
 					setTicker={setTicker}
 					setRange={setRange}
