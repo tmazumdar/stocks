@@ -35,6 +35,17 @@ const config: ForgeConfig = {
       },
     }),
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'tmazumdar',
+          name: 'stocks'
+        }
+      }
+    }
+  ],
 };
 
 export default config;
