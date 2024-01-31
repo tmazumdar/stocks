@@ -75,6 +75,7 @@ export function ChartBar({
 				<div className="join">
 					<input
 						className="join-item btn btn-sm"
+						checked
 						type="radio"
 						name="options"
 						aria-label="D"

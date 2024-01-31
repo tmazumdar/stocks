@@ -16,25 +16,41 @@ export function Content() {
 	const [tickerRows, setTickerRows] = useState<Array<TickerRow>>([]);
 	const [tickerStats, setTickerStats] = useState<TickerStat[]>([]);
 	const [ticker, setTicker] = useState("");
+	const [displayTicker, setDisplayTicker] = useState("");
+	const [apiError, setApiError] = useState(false);
 	const [range, setRange] = useState("D");
 	const [apiData, setApiData] = useState([]);
 
-	useEffect(() => {
-		console.log(apiData);
-	}, [apiData]);
 	useEffect(() => {
 		//console.log(ticker);
 		console.log("ticker: ", ticker);
 		if (ticker.length > 0) {
 			window.api
-				.fetchAggregates(ticker, 10, "minute", "2024-01-25", "2024-01-26", 1250)
-				.then((res: any) => {
-					setApiData(JSON.parse(res).results);
+				.fetchAggregates(
+					ticker,
+					15,
+					"minute",
+					"1706538600000",
+					"1706562000000",
+					600 // number of base aggregates queried (15-min chunks)
+				)
+				.then((response: any) => {
+					var response = JSON.parse(response);
+					if (response.status == "OK") {
+						setDisplayTicker(response.ticker);
+						console.log("results: ", response);
+						setApiError(false);
+						setApiData(response.results);
+					} else {
+						setApiError(true);
+						console.log("results: ", response);
+					}
 				});
 		}
 	}, [ticker]);
+
 	useEffect(() => {
-		//console.log(range);
+		console.log(range);
 	}, [range]);
 
 	useEffect(() => {
@@ -84,6 +100,8 @@ export function Content() {
 					savedTickers={savedTickers}
 					ticker={ticker}
 					range={range}
+					displayTicker={displayTicker}
+					apiError={apiError}
 					apiData={apiData}
 					setTicker={setTicker}
 					setRange={setRange}

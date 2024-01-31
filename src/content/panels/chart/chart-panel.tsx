@@ -7,6 +7,8 @@ type ChartPanelProps = {
 	apiData: Array<AggregatePoint>;
 	savedTickers: Array<string>;
 	ticker: string;
+	displayTicker: string;
+	apiError: boolean;
 	setTicker: React.Dispatch<React.SetStateAction<string>>;
 	range: string;
 	setRange: React.Dispatch<React.SetStateAction<string>>;
@@ -16,6 +18,8 @@ export function ChartPanel({
 	apiData,
 	savedTickers,
 	ticker,
+	displayTicker,
+	apiError,
 	setTicker,
 	range,
 	setRange,
@@ -29,7 +33,11 @@ export function ChartPanel({
 				range={range}
 				setRange={setRange}
 			></ChartBar>
-			<ChartInstance apiData={apiData}></ChartInstance>
+			<ChartInstance
+				apiError={apiError}
+				displayTicker={displayTicker}
+				apiData={apiData}
+			></ChartInstance>
 		</>
 	);
 }
