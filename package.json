@@ -1,7 +1,7 @@
 {
   "name": "stocks",
   "productName": "stocks",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Ticker Tracker - a stock tracking application",
   "main": ".webpack/main",
   "scripts": {
