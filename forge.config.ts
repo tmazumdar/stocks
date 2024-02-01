@@ -42,7 +42,9 @@ const config: ForgeConfig = {
         repository: {
           owner: 'tmazumdar',
           name: 'stocks'
-        }
+        },
+        prerelease: false,
+        draft: true
       }
     }
   ],
