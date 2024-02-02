@@ -26,30 +26,26 @@ export function Content() {
 	const [remainingTime, setRemainingTime] = useState(0);
 
 	useEffect(() => {
-		console.log(ticker);
-
 		if (ticker.length > 0) {
 			window.api
 				.fetchAggregates(
 					ticker,
-					getTimespanMultiplier(range),
-					getTimespan(range),
-					getStartTime(getPreviousBusinessDayDate(), range),
-					getPreviousBusinessDayDate().getTime(),
-					5000 // number of base aggregates queried (15-min chunks)
+					getTimespanMultiplier(range), // timespan multiplier e.g. # of days
+					getTimespan(range), // timespan e.g. day/month/year
+					getStartTime(getPreviousBusinessDayDate(), range), // from
+					getPreviousBusinessDayDate().getTime(), // to
+					5000 // limit
 				)
 				.then((response: any) => {
 					var response = JSON.parse(response);
 					if (response.status == "OK") {
 						setDisplayTicker(response.ticker);
-						console.log("results: ", response);
 						setApiError(false);
 						setApiData(response.results);
 						setRemainingTime(0);
 					} else {
 						setApiError(true);
 						setRemainingTime(remainingTime + 30);
-						console.log("results: ", response);
 					}
 				});
 		}
@@ -80,8 +76,8 @@ export function Content() {
 	}, [savedTickers]);
 
 	setTimeout(() => {
+		// countdown api timeout
 		if (remainingTime > 0) {
-			console.log("subtracting:", remainingTime);
 			setRemainingTime(remainingTime - 1);
 			if (remainingTime === 1) setApiError(false);
 		}
@@ -113,7 +109,6 @@ export function Content() {
 					displayTicker={displayTicker}
 					apiError={apiError}
 					remainingTime={remainingTime}
-					setRemainingTime={setRemainingTime}
 					apiData={apiData}
 					setTicker={setTicker}
 					setRange={setRange}

@@ -7,6 +7,8 @@ type HomePanelProps = {
 	setRange: React.Dispatch<SetStateAction<string>>;
 	savedTickers: Array<string>;
 	apiError: boolean;
+	showMore: boolean;
+	setShowMore: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export function ChartBar({
@@ -16,6 +18,8 @@ export function ChartBar({
 	range,
 	setRange,
 	apiError,
+	showMore,
+	setShowMore,
 }: HomePanelProps) {
 	const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (
 		e
@@ -27,6 +31,12 @@ export function ChartBar({
 		e: React.MouseEvent<HTMLInputElement>
 	) => {
 		setRange((e.target as HTMLInputElement).value);
+	};
+
+	const handleShowMoreClick: React.MouseEventHandler<HTMLButtonElement> = (
+		e: React.MouseEvent<HTMLButtonElement>
+	) => {
+		setShowMore(!showMore);
 	};
 
 	return (
@@ -74,11 +84,12 @@ export function ChartBar({
 						})}
 				</select>
 			</div>
+
 			<div className="flex-1">
 				<div className="join">
 					<input
 						disabled={apiError}
-						className="join-item btn btn-md"
+						className="join-item btn btn-sm"
 						checked={range === "D"}
 						type="radio"
 						name="options"
@@ -88,7 +99,7 @@ export function ChartBar({
 					/>
 					<input
 						disabled={apiError}
-						className="join-item btn btn-md"
+						className="join-item btn btn-sm"
 						checked={range === "W"}
 						type="radio"
 						name="options"
@@ -98,7 +109,7 @@ export function ChartBar({
 					/>
 					<input
 						disabled={apiError}
-						className="join-item btn btn-md"
+						className="join-item btn btn-sm"
 						checked={range === "M"}
 						type="radio"
 						name="options"
@@ -108,7 +119,7 @@ export function ChartBar({
 					/>
 					<input
 						disabled={apiError}
-						className="join-item btn btn-md"
+						className="join-item btn btn-sm"
 						checked={range === "6M"}
 						type="radio"
 						name="options"
@@ -118,7 +129,7 @@ export function ChartBar({
 					/>
 					<input
 						disabled={apiError}
-						className="join-item btn btn-md"
+						className="join-item btn btn-sm"
 						checked={range == "YTD"}
 						type="radio"
 						name="options"
@@ -128,7 +139,7 @@ export function ChartBar({
 					/>
 					<input
 						disabled={apiError}
-						className="join-item btn btn-md"
+						className="join-item btn btn-sm"
 						checked={range == "Y"}
 						type="radio"
 						name="options"
@@ -138,7 +149,7 @@ export function ChartBar({
 					/>
 					<input
 						disabled={apiError}
-						className="join-item btn btn-md"
+						className="join-item btn btn-sm"
 						checked={range == "2Y"}
 						type="radio"
 						name="options"
@@ -146,6 +157,43 @@ export function ChartBar({
 						value={"2Y"}
 						onClick={(e) => handleRangeClick(e)}
 					/>
+					<button
+						disabled={!ticker || apiError}
+						className="join-item btn btn-sm text-primary"
+						onClick={(e) => handleShowMoreClick(e)}
+					>
+						{showMore ? (
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="w-6 h-6"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6"
+								/>
+							</svg>
+						) : (
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="w-6 h-6"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"
+								/>
+							</svg>
+						)}
+					</button>
 				</div>
 			</div>
 		</div>

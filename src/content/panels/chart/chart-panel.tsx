@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChartBar } from "./chart-bar";
 import { ChartInstance } from "./chart-instance";
 import { AggregatePoint } from "../../../types";
@@ -10,7 +10,6 @@ type ChartPanelProps = {
 	displayTicker: string;
 	apiError: boolean;
 	remainingTime: number;
-	setRemainingTime: React.Dispatch<React.SetStateAction<number>>;
 	setTicker: React.Dispatch<React.SetStateAction<string>>;
 	range: string;
 	setRange: React.Dispatch<React.SetStateAction<string>>;
@@ -23,11 +22,11 @@ export function ChartPanel({
 	displayTicker,
 	apiError,
 	remainingTime,
-	setRemainingTime,
 	setTicker,
 	range,
 	setRange,
 }: ChartPanelProps) {
+	const [showMore, setShowMore] = useState(false);
 	return (
 		<>
 			<ChartBar
@@ -37,6 +36,8 @@ export function ChartPanel({
 				range={range}
 				setRange={setRange}
 				apiError={apiError}
+				showMore={showMore}
+				setShowMore={setShowMore}
 			></ChartBar>
 			{apiError && (
 				<div role="alert" className="alert shadow-sm alert-warning">
@@ -104,6 +105,7 @@ export function ChartPanel({
 				apiError={apiError}
 				displayTicker={displayTicker}
 				apiData={apiData}
+				showMore={showMore}
 			></ChartInstance>
 		</>
 	);

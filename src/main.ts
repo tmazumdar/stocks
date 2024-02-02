@@ -68,8 +68,7 @@ ipcMain.handle("fetchGroupedDaily", async (event, ...args) => {
 
   // read data from saved config if any
   let preferencesFileExists = fs.existsSync(preferencesfilePath);
-  // console.log("preferencesFileExists:", preferencesFileExists);
-  // console.log("statsArray:", statsArray);
+
   if (preferencesFileExists && statsArray) {
     let jsonData = fs.readFileSync(preferencesfilePath, "utf8");
     var savedTickers = JSON.parse(jsonData);

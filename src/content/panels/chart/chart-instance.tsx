@@ -18,6 +18,7 @@ type ChartInstanceProps = {
 	apiError: boolean;
 	displayTicker: string;
 	apiData: Array<AggregatePoint>;
+	showMore: boolean;
 };
 
 ChartJS.register(
@@ -35,9 +36,10 @@ export function ChartInstance({
 	apiError,
 	displayTicker,
 	apiData,
+	showMore,
 }: ChartInstanceProps) {
-	//const labels = ["January", "February", "March", "April", "May", "June", "July"];
 	let labels;
+	let simpleData: ChartData<"line">;
 	let data: ChartData<"line">;
 	const dateFormatOptions: Intl.DateTimeFormatOptions = {
 		day: "2-digit",
@@ -54,7 +56,6 @@ export function ChartInstance({
 				display: apiData && apiData.length > 0,
 				position: "top" as const,
 			},
-			//datalabels: {},
 			title: {
 				display: !!displayTicker,
 				text: `${displayTicker} Chart`,
@@ -96,12 +97,12 @@ export function ChartInstance({
 			},
 			y1: {
 				type: "linear",
-				display: true,
+				display: showMore,
 				position: "right",
 				title: {
 					display: true,
 					padding: 4,
-					text: "# of Units",
+					text: "# of units",
 				},
 				// grid line settings
 				grid: {
@@ -115,6 +116,31 @@ export function ChartInstance({
 		labels = apiData.map((m) =>
 			new Date(m.t).toLocaleDateString("en-US", dateFormatOptions)
 		);
+
+		simpleData = {
+			labels,
+			datasets: [
+				{
+					label: "Price",
+					data: labels.map((l) => {
+						return apiData.filter((m) => {
+							return (
+								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
+								l
+							);
+						})[0].c;
+					}),
+					borderColor: "rgb(160, 232, 142)",
+					tension: 0.3,
+					fill: {
+						target: "origin",
+					},
+					borderWidth: 2,
+					pointRadius: 0,
+					yAxisID: "y",
+				},
+			],
+		};
 
 		data = {
 			labels,
@@ -133,12 +159,11 @@ export function ChartInstance({
 					tension: 0.2,
 					fill: {
 						target: 2,
-						// above: "rgb(60, 02, 42)",
-						// below: "rgb(45, 24, 42)",
 					},
 					borderWidth: 2,
 					pointRadius: 1,
 					yAxisID: "y",
+					showLine: false,
 				},
 				{
 					label: "Volume Weighted Price",
@@ -173,6 +198,7 @@ export function ChartInstance({
 					borderWidth: 2,
 					pointRadius: 1,
 					yAxisID: "y",
+					showLine: false,
 				},
 				{
 					label: "Volume",
@@ -201,8 +227,8 @@ export function ChartInstance({
 							);
 						})[0].n;
 					}),
-					borderColor: "rgb(294, 229, 271)",
-					backgroundColor: "rgb(294, 229, 271)",
+					borderColor: "rgb(224, 229, 271)",
+					backgroundColor: "rgb(224, 229, 271)",
 					tension: 0.4,
 					borderWidth: 3,
 					pointRadius: 1,
@@ -219,7 +245,8 @@ export function ChartInstance({
 				}}
 				className="bg-transparent"
 			>
-				{apiData && <Line options={options} data={data} />}
+				{apiData && !showMore && <Line options={options} data={simpleData} />}
+				{apiData && showMore && <Line options={options} data={data} />}
 			</div>
 		</>
 	);

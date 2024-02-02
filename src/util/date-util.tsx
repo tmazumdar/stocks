@@ -23,8 +23,7 @@ export const getStartTime = (endDate: Date, range: string) => {
 	let startDate;
 	let date = new Date(endDate);
 	date.setHours(9, 30, 0, 0); // set to US market open time
-	console.log("endDate: ", endDate.toLocaleDateString());
-	console.log("endDateMs: ", endDate.getTime());
+
 	switch (range) {
 		case "D":
 			date.setDate(date.getDate() - 1);
@@ -51,16 +50,15 @@ export const getStartTime = (endDate: Date, range: string) => {
 			startDate = new Date(date.setFullYear(date.getFullYear() - 2));
 			break;
 		default:
-			console.log("default");
 			break;
 	}
 
-	console.log("startDate: ", startDate.toLocaleDateString());
-	console.log("startDateMs: ", startDate.getTime());
 	return startDate.getTime();
 };
 
 export const getTimespan = (range: string) => {
+	//	these are set to optimize resolution of datapoints when fetching prices
+	//  (https://polygon.io/blog/aggs-api-updates)
 	switch (range) {
 		case "D":
 			return "minute";
@@ -82,13 +80,15 @@ export const getTimespan = (range: string) => {
 };
 
 export const getTimespanMultiplier = (range: string) => {
+	//	these are set to optimize resolution of datapoints when fetching prices
+	//  (https://polygon.io/blog/aggs-api-updates)
 	switch (range) {
 		case "D":
 			return 10;
 		case "W":
 			return 30;
 		case "M":
-			return 60; // account for extra week when querying aggregate bars (https://polygon.io/blog/aggs-api-updates)
+			return 60;
 		case "6M":
 			return 1;
 		case "YTD":
