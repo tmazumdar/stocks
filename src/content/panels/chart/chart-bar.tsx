@@ -139,11 +139,11 @@ export function ChartBar({
 					<input
 						disabled={apiError}
 						className="join-item btn btn-md"
-						checked={range == "5Y"}
+						checked={range == "2Y"}
 						type="radio"
 						name="options"
-						aria-label="5Y"
-						value={"5Y"}
+						aria-label="2Y"
+						value={"2Y"}
 						onClick={(e) => handleRangeClick(e)}
 					/>
 				</div>

@@ -8,6 +8,9 @@ import { TickerRow, TickerStat } from "../types";
 import {
 	getPreviousBusinessDayDate,
 	getFormattedDate,
+	getStartTime,
+	getTimespan,
+	getTimespanMultiplier,
 } from "../util/date-util";
 
 export function Content() {
@@ -23,17 +26,17 @@ export function Content() {
 	const [remainingTime, setRemainingTime] = useState(0);
 
 	useEffect(() => {
-		//console.log(ticker);
-		console.log("ticker: ", ticker);
+		console.log(ticker);
+
 		if (ticker.length > 0) {
 			window.api
 				.fetchAggregates(
 					ticker,
-					10,
-					"minute",
-					"1706538600000",
-					"1706562000000",
-					600 // number of base aggregates queried (15-min chunks)
+					getTimespanMultiplier(range),
+					getTimespan(range),
+					getStartTime(getPreviousBusinessDayDate(), range),
+					getPreviousBusinessDayDate().getTime(),
+					5000 // number of base aggregates queried (15-min chunks)
 				)
 				.then((response: any) => {
 					var response = JSON.parse(response);
@@ -50,11 +53,7 @@ export function Content() {
 					}
 				});
 		}
-	}, [ticker]);
-
-	useEffect(() => {
-		console.log(range);
-	}, [range]);
+	}, [ticker, range]);
 
 	useEffect(() => {
 		// load tickers from preferences file, this is needed for SearchPanel

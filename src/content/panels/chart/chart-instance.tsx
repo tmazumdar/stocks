@@ -39,6 +39,13 @@ export function ChartInstance({
 	//const labels = ["January", "February", "March", "April", "May", "June", "July"];
 	let labels;
 	let data: ChartData<"line">;
+	const dateFormatOptions: Intl.DateTimeFormatOptions = {
+		day: "2-digit",
+		month: "short",
+		year: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+	};
 
 	let options: ChartOptions<"line"> = {
 		responsive: true,
@@ -106,12 +113,7 @@ export function ChartInstance({
 
 	if (!!apiData) {
 		labels = apiData.map((m) =>
-			new Date(m.t).toLocaleDateString("en-US", {
-				day: "2-digit",
-				month: "short",
-				hour: "2-digit",
-				minute: "2-digit",
-			})
+			new Date(m.t).toLocaleDateString("en-US", dateFormatOptions)
 		);
 
 		data = {
@@ -122,12 +124,8 @@ export function ChartInstance({
 					data: labels.map((l) => {
 						return apiData.filter((m) => {
 							return (
-								new Date(m.t).toLocaleDateString("en-US", {
-									day: "2-digit",
-									month: "short",
-									hour: "2-digit",
-									minute: "2-digit",
-								}) === l
+								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
+								l
 							);
 						})[0].h;
 					}),
@@ -147,12 +145,8 @@ export function ChartInstance({
 					data: labels.map((l) => {
 						return apiData.filter((m) => {
 							return (
-								new Date(m.t).toLocaleDateString("en-US", {
-									day: "2-digit",
-									month: "short",
-									hour: "2-digit",
-									minute: "2-digit",
-								}) === l
+								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
+								l
 							);
 						})[0].vw;
 					}),
@@ -168,12 +162,8 @@ export function ChartInstance({
 					data: labels.map((l) => {
 						return apiData.filter((m) => {
 							return (
-								new Date(m.t).toLocaleDateString("en-US", {
-									day: "2-digit",
-									month: "short",
-									hour: "2-digit",
-									minute: "2-digit",
-								}) === l
+								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
+								l
 							);
 						})[0].l;
 					}),
@@ -189,12 +179,8 @@ export function ChartInstance({
 					data: labels.map((l) => {
 						return apiData.filter((m) => {
 							return (
-								new Date(m.t).toLocaleDateString("en-US", {
-									day: "2-digit",
-									month: "short",
-									hour: "2-digit",
-									minute: "2-digit",
-								}) === l
+								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
+								l
 							);
 						})[0].v;
 					}),
@@ -210,12 +196,8 @@ export function ChartInstance({
 					data: labels.map((l) => {
 						return apiData.filter((m) => {
 							return (
-								new Date(m.t).toLocaleDateString("en-US", {
-									day: "2-digit",
-									month: "short",
-									hour: "2-digit",
-									minute: "2-digit",
-								}) === l
+								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
+								l
 							);
 						})[0].n;
 					}),

@@ -18,3 +18,86 @@ export const getFormattedDate = (date: Date) => {
 	var day = date.toLocaleString("default", { day: "2-digit" });
 	return year + "-" + month + "-" + day;
 };
+
+export const getStartTime = (endDate: Date, range: string) => {
+	let startDate;
+	let date = new Date(endDate);
+	date.setHours(9, 30, 0, 0); // set to US market open time
+	console.log("endDate: ", endDate.toLocaleDateString());
+	console.log("endDateMs: ", endDate.getTime());
+	switch (range) {
+		case "D":
+			date.setDate(date.getDate() - 1);
+			startDate = new Date(date);
+			break;
+		case "W":
+			startDate = new Date(date.setDate(date.getDate() - 7));
+			break;
+		case "M":
+			startDate = new Date(date.setMonth(date.getMonth() - 1));
+			break;
+		case "6M":
+			startDate = new Date(date.setMonth(date.getMonth() - 6));
+			break;
+		case "YTD":
+			date.setMonth(0);
+			date.setDate(1);
+			startDate = new Date(date);
+			break;
+		case "Y":
+			startDate = new Date(date.setFullYear(date.getFullYear() - 1));
+			break;
+		case "2Y":
+			startDate = new Date(date.setFullYear(date.getFullYear() - 2));
+			break;
+		default:
+			console.log("default");
+			break;
+	}
+
+	console.log("startDate: ", startDate.toLocaleDateString());
+	console.log("startDateMs: ", startDate.getTime());
+	return startDate.getTime();
+};
+
+export const getTimespan = (range: string) => {
+	switch (range) {
+		case "D":
+			return "minute";
+		case "W":
+			return "minute";
+		case "M":
+			return "minute";
+		case "6M":
+			return "week";
+		case "YTD":
+			return "day";
+		case "Y":
+			return "week";
+		case "2Y":
+			return "week";
+		default:
+			return "day";
+	}
+};
+
+export const getTimespanMultiplier = (range: string) => {
+	switch (range) {
+		case "D":
+			return 10;
+		case "W":
+			return 30;
+		case "M":
+			return 60; // account for extra week when querying aggregate bars (https://polygon.io/blog/aggs-api-updates)
+		case "6M":
+			return 1;
+		case "YTD":
+			return 1;
+		case "Y":
+			return 1;
+		case "2Y":
+			return 1;
+		default:
+			return 365; // unused so its irrelevant
+	}
+};
