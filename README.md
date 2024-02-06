@@ -4,13 +4,13 @@ A stock ticker tracking app that runs on desktop (Windows, MacOS, Linux)
 `git clone https://github.com/tmazumdar/stocks.git`
 
 # build
-`npm install`
+`yarn install`
 
 # run
-`npm start`
+`yarn start`
 
 # package
-`npm run make`
+`yarn run make`
 A distributable package will be created in `out` folder
 
 # Screenshots
