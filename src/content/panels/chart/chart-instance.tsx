@@ -136,7 +136,7 @@ export function ChartInstance({
 						target: "origin",
 					},
 					borderWidth: 2,
-					pointRadius: 0,
+					pointRadius: 1,
 					yAxisID: "y",
 				},
 			],

@@ -65,7 +65,7 @@ export const getTimespan = (range: string) => {
 		case "W":
 			return "minute";
 		case "M":
-			return "minute";
+			return "day";
 		case "6M":
 			return "week";
 		case "YTD":
@@ -84,11 +84,11 @@ export const getTimespanMultiplier = (range: string) => {
 	//  (https://polygon.io/blog/aggs-api-updates)
 	switch (range) {
 		case "D":
-			return 10;
+			return 15;
 		case "W":
 			return 30;
 		case "M":
-			return 60;
+			return 1;
 		case "6M":
 			return 1;
 		case "YTD":
