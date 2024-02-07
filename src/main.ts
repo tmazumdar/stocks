@@ -61,7 +61,7 @@ ipcMain.handle("fetchTickers", async (event, ...args) => {
 });
 
 ipcMain.handle("fetchGroupedDaily", async (event, ...args) => {
-  console.log("Loading data for :", args);
+  // console.log("Loading data for :", args);
   const response = await fetch(`https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${args}?adjusted=true&include_otc=true&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
   let data = await response.text();
   let statsArray = JSON.parse(data).results;
@@ -78,11 +78,11 @@ ipcMain.handle("fetchGroupedDaily", async (event, ...args) => {
 });
 
 ipcMain.handle("fetchAggregates", async (event, ...args) => {
-  console.log(args);
+  // console.log(args);
   const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${args[0]}/range/${args[1]}/${args[2]}/${args[3]}/${args[4]}?adjusted=true&sort=asc&limit=${args[5]}&apiKey=HzJHe3u2lVj09fNALzS5R09W2myXV9kI`)
   
   var data = await response.text();
-  console.log("response: ", data)
+  // console.log("response: ", data)
   return data;
 });
 

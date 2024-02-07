@@ -123,11 +123,7 @@ export function ChartInstance({
 				datasets: [
 					{
 						label: "Price",
-						data: labels.map((l) => {
-							return apiData.filter((m) => {
-								return m.t.toString() == l;
-							})[0].c;
-						}),
+						data: apiData.map(a => a.c),
 						borderColor: "rgb(160, 232, 142)",
 						tension: 0.3,
 						fill: {
@@ -148,11 +144,7 @@ export function ChartInstance({
 				datasets: [
 					{
 						label: "High Price",
-						data: labels.map((l) => {
-							return apiData.filter((m) => {
-								return m.t.toString() == l;
-							})[0].h;
-						}),
+						data: apiData.map(a => a.h),
 						borderColor: "rgb(160, 232, 142)",
 						tension: 0.2,
 						fill: {
@@ -165,11 +157,7 @@ export function ChartInstance({
 					},
 					{
 						label: "Volume Weighted Price",
-						data: labels.map((l) => {
-							return apiData.filter((m) => {
-								return m.t.toString() == l;
-							})[0].vw;
-						}),
+						data: apiData.map(a => a.vw),
 						borderColor: "rgb(199, 146, 232)",
 						backgroundColor: "rgb(199, 146, 232)",
 						tension: 0.2,
@@ -179,11 +167,7 @@ export function ChartInstance({
 					},
 					{
 						label: "Low price",
-						data: labels.map((l) => {
-							return apiData.filter((m) => {
-								return m.t.toString() == l;
-							})[0].l;
-						}),
+						data: apiData.map(a => a.l),
 						borderColor: "rgb(255, 124, 92)",
 						backgroundColor: "rgb(255, 124, 92)",
 						tension: 0.2,
@@ -194,11 +178,7 @@ export function ChartInstance({
 					},
 					{
 						label: "Volume",
-						data: labels.map((l) => {
-							return apiData.filter((m) => {
-								return m.t.toString() == l;
-							})[0].v;
-						}),
+						data: apiData.map(a => a.v),
 						borderColor: "rgb(94, 129, 171)",
 						backgroundColor: "rgb(94, 129, 171)",
 						tension: 0.4,
@@ -208,11 +188,7 @@ export function ChartInstance({
 					},
 					{
 						label: "Transactions",
-						data: labels.map((l) => {
-							return apiData.filter((m) => {
-								return m.t.toString() == l;
-							})[0].n;
-						}),
+						data: apiData.map(a => a.n),
 						borderColor: "rgb(224, 229, 271)",
 						backgroundColor: "rgb(224, 229, 271)",
 						tension: 0.4,
