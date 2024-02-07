@@ -113,129 +113,116 @@ export function ChartInstance({
 	};
 
 	if (!!apiData) {
-		labels = apiData.map((m) =>
-			new Date(m.t).toLocaleDateString("en-US", dateFormatOptions)
-		);
+		labels = apiData.map(m => m.t + "");
 
-		simpleData = {
-			labels,
-			datasets: [
-				{
-					label: "Price",
-					data: labels.map((l) => {
-						return apiData.filter((m) => {
-							return (
-								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
-								l
-							);
-						})[0].c;
-					}),
-					borderColor: "rgb(160, 232, 142)",
-					tension: 0.3,
-					fill: {
-						target: "origin",
+		if (!showMore) {
+			simpleData = {
+				labels: apiData.map((m) =>
+					new Date(m.t).toLocaleDateString("en-US", dateFormatOptions)
+				),
+				datasets: [
+					{
+						label: "Price",
+						data: labels.map((l) => {
+							return apiData.filter((m) => {
+								return m.t.toString() == l;
+							})[0].c;
+						}),
+						borderColor: "rgb(160, 232, 142)",
+						tension: 0.3,
+						fill: {
+							target: "origin",
+						},
+						borderWidth: 2,
+						pointRadius: 1,
+						yAxisID: "y",
 					},
-					borderWidth: 2,
-					pointRadius: 1,
-					yAxisID: "y",
-				},
-			],
-		};
-
-		data = {
-			labels,
-			datasets: [
-				{
-					label: "High Price",
-					data: labels.map((l) => {
-						return apiData.filter((m) => {
-							return (
-								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
-								l
-							);
-						})[0].h;
-					}),
-					borderColor: "rgb(160, 232, 142)",
-					tension: 0.2,
-					fill: {
-						target: 2,
+				],
+			};
+		}
+		else {
+			data = {
+				labels: apiData.map((m) =>
+					new Date(m.t).toLocaleDateString("en-US", dateFormatOptions)
+				),
+				datasets: [
+					{
+						label: "High Price",
+						data: labels.map((l) => {
+							return apiData.filter((m) => {
+								return m.t.toString() == l;
+							})[0].h;
+						}),
+						borderColor: "rgb(160, 232, 142)",
+						tension: 0.2,
+						fill: {
+							target: 2,
+						},
+						borderWidth: 2,
+						pointRadius: 1,
+						yAxisID: "y",
+						showLine: false,
 					},
-					borderWidth: 2,
-					pointRadius: 1,
-					yAxisID: "y",
-					showLine: false,
-				},
-				{
-					label: "Volume Weighted Price",
-					data: labels.map((l) => {
-						return apiData.filter((m) => {
-							return (
-								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
-								l
-							);
-						})[0].vw;
-					}),
-					borderColor: "rgb(199, 146, 232)",
-					backgroundColor: "rgb(199, 146, 232)",
-					tension: 0.2,
-					borderWidth: 2,
-					pointRadius: 1,
-					yAxisID: "y",
-				},
-				{
-					label: "Low price",
-					data: labels.map((l) => {
-						return apiData.filter((m) => {
-							return (
-								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
-								l
-							);
-						})[0].l;
-					}),
-					borderColor: "rgb(255, 124, 92)",
-					backgroundColor: "rgb(255, 124, 92)",
-					tension: 0.2,
-					borderWidth: 2,
-					pointRadius: 1,
-					yAxisID: "y",
-					showLine: false,
-				},
-				{
-					label: "Volume",
-					data: labels.map((l) => {
-						return apiData.filter((m) => {
-							return (
-								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
-								l
-							);
-						})[0].v;
-					}),
-					borderColor: "rgb(94, 129, 171)",
-					backgroundColor: "rgb(94, 129, 171)",
-					tension: 0.4,
-					borderWidth: 3,
-					pointRadius: 1,
-					yAxisID: "y1",
-				},
-				{
-					label: "Transactions",
-					data: labels.map((l) => {
-						return apiData.filter((m) => {
-							return (
-								new Date(m.t).toLocaleDateString("en-US", dateFormatOptions) ===
-								l
-							);
-						})[0].n;
-					}),
-					borderColor: "rgb(224, 229, 271)",
-					backgroundColor: "rgb(224, 229, 271)",
-					tension: 0.4,
-					borderWidth: 3,
-					pointRadius: 1,
-					yAxisID: "y1",
-				},
-			],
-		};
+					{
+						label: "Volume Weighted Price",
+						data: labels.map((l) => {
+							return apiData.filter((m) => {
+								return m.t.toString() == l;
+							})[0].vw;
+						}),
+						borderColor: "rgb(199, 146, 232)",
+						backgroundColor: "rgb(199, 146, 232)",
+						tension: 0.2,
+						borderWidth: 2,
+						pointRadius: 1,
+						yAxisID: "y",
+					},
+					{
+						label: "Low price",
+						data: labels.map((l) => {
+							return apiData.filter((m) => {
+								return m.t.toString() == l;
+							})[0].l;
+						}),
+						borderColor: "rgb(255, 124, 92)",
+						backgroundColor: "rgb(255, 124, 92)",
+						tension: 0.2,
+						borderWidth: 2,
+						pointRadius: 1,
+						yAxisID: "y",
+						showLine: false,
+					},
+					{
+						label: "Volume",
+						data: labels.map((l) => {
+							return apiData.filter((m) => {
+								return m.t.toString() == l;
+							})[0].v;
+						}),
+						borderColor: "rgb(94, 129, 171)",
+						backgroundColor: "rgb(94, 129, 171)",
+						tension: 0.4,
+						borderWidth: 3,
+						pointRadius: 1,
+						yAxisID: "y1",
+					},
+					{
+						label: "Transactions",
+						data: labels.map((l) => {
+							return apiData.filter((m) => {
+								return m.t.toString() == l;
+							})[0].n;
+						}),
+						borderColor: "rgb(224, 229, 271)",
+						backgroundColor: "rgb(224, 229, 271)",
+						tension: 0.4,
+						borderWidth: 3,
+						pointRadius: 1,
+						yAxisID: "y1",
+					},
+				],
+			};
+		}
 	}
 	return (
 		<>
