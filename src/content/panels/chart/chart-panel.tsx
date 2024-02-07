@@ -78,7 +78,7 @@ export function ChartPanel({
 			)}
 
 			{!apiData && (
-				<div role="alert" className="alert shadow-sm alert-warning">
+				<div role="alert" className="alert rounded shadow-sm alert-warning">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
