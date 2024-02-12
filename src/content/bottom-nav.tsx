@@ -10,6 +10,7 @@ export function BottomNav({
 	return (
 		<div className="btm-nav">
 			<button
+				role="button"
 				onClick={() => setActivePanelIndex(0)}
 				className={
 					activePanelIndex === 0 ? "active text-primary" : "text-primary"
@@ -31,6 +32,7 @@ export function BottomNav({
 				</svg>
 			</button>
 			<button
+				role="button"
 				onClick={() => setActivePanelIndex(1)}
 				className={
 					activePanelIndex === 1 ? "active text-primary" : "text-primary"
@@ -50,6 +52,7 @@ export function BottomNav({
 				</svg>
 			</button>
 			<button
+				role="button"
 				onClick={() => setActivePanelIndex(2)}
 				className={
 					activePanelIndex === 2 ? "active text-primary" : "text-primary"
